@@ -13,6 +13,6 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         xSpeed = Input.GetAxis("Horizontal") * speed;
-        rb.velocity = new Vector2(xSpeed, 0f);
+        rb.velocity = new Vector2(xSpeed, rb.velocity.y);
     }
 }
