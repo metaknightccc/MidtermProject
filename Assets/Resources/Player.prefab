@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4537361323835731976}
   - component: {fileID: 4537361323835731977}
   - component: {fileID: 4537361323835731982}
-  - component: {fileID: 4537361323835731978}
   m_Layer: 0
   m_Name: Player1Model
   m_TagString: Untagged
@@ -125,28 +124,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &4537361323835731978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4537361323835731983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d3f902177d89498ca1c96caa04021a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
-  jumpForce: 300
-  feet: {fileID: 4537361325472129727}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  radius: 0.3
-  grounded: 0
-  extraJumps: 1
-  rb: {fileID: 4537361323835731982}
 --- !u!1 &4537361324372449466
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,7 +133,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4537361324372449460}
-  - component: {fileID: 4537361324372449461}
+  - component: {fileID: -6913178867478401668}
+  - component: {fileID: -8480479769029810118}
+  - component: {fileID: 4477120100618152706}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -180,7 +159,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4537361324372449461
+--- !u!114 &-6913178867478401668
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -189,13 +168,76 @@ MonoBehaviour:
   m_GameObject: {fileID: 4537361324372449466}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 951099334
-  AlwaysReplicateAsRoot: 0
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: -8480479769029810118}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &-8480479769029810118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4537361324372449466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PositionModel:
+    SynchronizeEnabled: 1
+    TeleportEnabled: 1
+    TeleportIfDistanceGreaterThan: 3
+    InterpolateOption: 2
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 1
+    ExtrapolateOption: 0
+    ExtrapolateSpeed: 1
+    ExtrapolateIncludingRoundTripTime: 1
+    ExtrapolateNumberOfStoredPositions: 1
+  m_RotationModel:
+    SynchronizeEnabled: 0
+    InterpolateOption: 1
+    InterpolateRotateTowardsSpeed: 180
+    InterpolateLerpSpeed: 5
+  m_ScaleModel:
+    SynchronizeEnabled: 0
+    InterpolateOption: 0
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 0
+--- !u!114 &4477120100618152706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4537361324372449466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d3f902177d89498ca1c96caa04021a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  jumpForce: 300
+  feet: {fileID: 4537361325472129727}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  radius: 0.3
+  grounded: 0
+  extraJumps: 1
+  rb: {fileID: 4537361323835731982}
+  view: {fileID: -6913178867478401668}
 --- !u!1 &4537361325472129724
 GameObject:
   m_ObjectHideFlags: 0
