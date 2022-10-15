@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 3647648233995059057}
   - component: {fileID: 8872425991856692970}
   m_Layer: 0
-  m_Name: PlayerTestMultiplayer(Clone)
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
