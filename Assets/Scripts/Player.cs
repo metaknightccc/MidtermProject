@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     //float hitStun = 0;
     public Transform hb;
     public float hb_size;
-    public float kb;
+    public Vector2 kb;
 
 
     void Update() {
@@ -47,14 +47,13 @@ public class Player : MonoBehaviour
             if(Input.GetMouseButtonDown(0) && grounded) {
                 endLag = 1;
                 rb.velocity = new Vector2(0, rb.velocity.y);
-                Collider2D[] colliders = Physics2D.OverlapCircleAll(hb.transform.position, hb_size);
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(hb.position, hb_size);
                 foreach (Collider2D nearby in colliders) {
                     if (nearby.tag == "Player") {
                         Rigidbody2D enemyRB = nearby.GetComponent<Rigidbody2D>();
-                        Vector2 direction = (nearby.transform.position - transform.position).normalized;
-                        Vector2 knockback = direction * kb;
+                        //Vector2 direction = (nearby.transform.position - transform.position).normalized;
                         if (enemyRB != null) {
-                            enemyRB.AddForce(knockback);
+                            enemyRB.AddForce(kb);
                         }
                     }
                 }
@@ -72,5 +71,13 @@ public class Player : MonoBehaviour
         if (endLag > 0) {
             endLag -= Time.deltaTime;
         }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        if(hb == null) {
+            return;
+        }
+        Gizmos.DrawWireSphere(hb.position, hb_size);
     }
 }
