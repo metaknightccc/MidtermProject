@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.Input;
 
 public class Player : MonoBehaviour
 {
@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     public bool grounded = false;
     public int extraJumps = 1;
     public float health;
+    public InputAction playerControls;
 
     public Rigidbody2D rb;
     float xSpeed = 0;
