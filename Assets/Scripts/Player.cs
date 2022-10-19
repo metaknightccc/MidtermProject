@@ -19,11 +19,12 @@ public class Player : MonoBehaviour
 
 
     // Variables related to combat
-    public float endLag = 0;
+    public double endLag = 0;
     //float hitStun = 0;
-    public Transform hb;
-    public float hb_size;
-    public Vector2 kb;
+
+    public Transform[] hitboxes;
+    public float[] hitboxSizes;
+    public Vector2[] knockbacks;
 
 
     void Update() {
@@ -45,15 +46,16 @@ public class Player : MonoBehaviour
             }
             
             if(Input.GetMouseButtonDown(0) && grounded) {
-                endLag = 1;
+                endLag = 0.5;
+                Debug.Log(endLag);
                 rb.velocity = new Vector2(0, rb.velocity.y);
-                Collider2D[] colliders = Physics2D.OverlapCircleAll(hb.position, hb_size);
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(hitboxes[0].position, hitboxSizes[0]);
                 foreach (Collider2D nearby in colliders) {
                     if (nearby.tag == "Player") {
                         Rigidbody2D enemyRB = nearby.GetComponent<Rigidbody2D>();
                         //Vector2 direction = (nearby.transform.position - transform.position).normalized;
                         if (enemyRB != null) {
-                            enemyRB.AddForce(kb);
+                            enemyRB.AddForce(knockbacks[0]);
                         }
                     }
                 }
@@ -67,7 +69,10 @@ public class Player : MonoBehaviour
             xSpeed = Input.GetAxis("Horizontal") * speed;
             rb.velocity = new Vector2(xSpeed, rb.velocity.y);
         }
+    }
 
+    void LateUpdate()
+    {
         if (endLag > 0) {
             endLag -= Time.deltaTime;
         }
@@ -75,9 +80,6 @@ public class Player : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
-        if(hb == null) {
-            return;
-        }
-        Gizmos.DrawWireSphere(hb.position, hb_size);
+        Gizmos.DrawWireSphere(hitboxes[0].position, hitboxSizes[0]);
     }
 }
