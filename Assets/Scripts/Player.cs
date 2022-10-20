@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerGamepad : MonoBehaviour
+public class Player : MonoBehaviour
 {
     // Movement
     public int speed = 5;
