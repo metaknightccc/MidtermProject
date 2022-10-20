@@ -87,13 +87,15 @@ public class Player : MonoBehaviour
                         rb.velocity = new Vector2(0, rb.velocity.y);
                         Collider2D[] colliders = Physics2D.OverlapCircleAll(hitboxes[0].position, hitboxSizes[0]);
                         foreach (Collider2D nearby in colliders) {
+                            // Add check for self hitbox
                             if (nearby.tag == "Player") {
                                 Rigidbody2D enemyRB = nearby.GetComponent<Rigidbody2D>();
-                                //Vector2 direction = (nearby.transform.position - transform.position).normalized;
+                                if (enemyRB == rb) {
+                                    enemyRB = null;
+                                }
                                 if (enemyRB != null) {
                                     kb = new Vector2(knockbacks[0].x * direction, knockbacks[0].y);
                                     enemyRB.AddForce(kb);
-                                    //enemyRB.AddForce(knockbacks[0]);
                                 }
                             }
                         }
@@ -116,6 +118,21 @@ public class Player : MonoBehaviour
     }
 
 
+    void Respawn() {
+        // Lose a stock
+        // Percent = 0
+        gameObject.SetActive(true);
+        gameObject.transform.position = new Vector2(0, 5);
+        gameObject.tag = "InvulnerablePlayer";
+        Invoke("MakeVulnerable", 3f);
+    }
+
+
+    void MakeVulnerable() {
+        gameObject.tag = "Player";
+    }
+
+
     void FixedUpdate() {
         if (endLag <= 0) {
             rb.velocity = new Vector2(move.x * speed, rb.velocity.y);
@@ -129,13 +146,16 @@ public class Player : MonoBehaviour
             direction = 1;
         }
         if (gameObject.transform.position.x > blastzoneX || gameObject.transform.position.x < -1 * blastzoneX) {
-            Debug.Log("RespawnSide");
+            gameObject.SetActive(false);
+            Invoke("Respawn", 1f);
         }
         if (gameObject.transform.position.y < blastzoneFloor){
-            Debug.Log("RespawnFloor");
+            gameObject.SetActive(false);
+            Invoke("Respawn", 1f);
         }
         if (gameObject.transform.position.y > blastzoneCeiling){
-            Debug.Log("RespawnCeiling");
+            gameObject.SetActive(false);
+            Invoke("Respawn", 1f);
         }
     }
 

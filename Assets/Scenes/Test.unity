@@ -738,7 +738,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3234129814063720172, guid: 7b21c60051696af41a8175c795cfedb5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.3238002
+      value: -1.3237998
       objectReference: {fileID: 0}
     - target: {fileID: 3234129814063720172, guid: 7b21c60051696af41a8175c795cfedb5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -809,8 +809,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5618316909866586426, guid: 7b21c60051696af41a8175c795cfedb5, type: 3}
+      propertyPath: blastzoneX
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618316909866586426, guid: 7b21c60051696af41a8175c795cfedb5, type: 3}
+      propertyPath: blastzoneFloor
+      value: -8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618316909866586426, guid: 7b21c60051696af41a8175c795cfedb5, type: 3}
       propertyPath: doubleJumpForce
       value: 350
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618316909866586426, guid: 7b21c60051696af41a8175c795cfedb5, type: 3}
+      propertyPath: blastzoneCeiling
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5618316909866586426, guid: 7b21c60051696af41a8175c795cfedb5, type: 3}
       propertyPath: hitboxes.Array.size
