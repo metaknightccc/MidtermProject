@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     public Rigidbody2D rb;
     public Transform feet;
     public LayerMask groundLayer;
-    public float jumpForce = 500f;
+    public float jumpForce = 250f;
     public float doubleJumpForce = 250f;
     public bool grounded;
     public int extraJumps = 1;
@@ -26,6 +26,9 @@ public class Player : MonoBehaviour
     public Vector2[] knockbacks;
     Vector2 kb;
     int direction;
+    public float blastzoneX = 20f;
+    public float blastzoneCeiling = 20f;
+    public float blastzoneFloor = -10f;
 
     private void Awake() {
         controls = new PlayerControls();
@@ -61,6 +64,7 @@ public class Player : MonoBehaviour
                 } else {
                     if (extraJumps > 0) {
                         extraJumps -= 1;
+                        rb.velocity = new Vector2(rb.velocity.x, 0);
                         rb.AddForce(new Vector2(rb.velocity.x, doubleJumpForce));
                     }
                 }
@@ -123,6 +127,15 @@ public class Player : MonoBehaviour
         if (move.x > 0.5 && grounded) { //facing right on ground
             gameObject.transform.localScale = new Vector3(1,1,1);
             direction = 1;
+        }
+        if (gameObject.transform.position.x > blastzoneX || gameObject.transform.position.x < -1 * blastzoneX) {
+            Debug.Log("RespawnSide");
+        }
+        if (gameObject.transform.position.y < blastzoneFloor){
+            Debug.Log("RespawnFloor");
+        }
+        if (gameObject.transform.position.y > blastzoneCeiling){
+            Debug.Log("RespawnCeiling");
         }
     }
 
