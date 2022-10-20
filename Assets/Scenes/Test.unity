@@ -123,6 +123,38 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &24300061
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 24300062}
+  m_Layer: 0
+  m_Name: Moveset
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &24300062
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 24300061}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1902896682}
+  m_Father: {fileID: 1240066521}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &221073567
 GameObject:
   m_ObjectHideFlags: 0
@@ -429,46 +461,6 @@ MonoBehaviour:
   - {fileID: 221073567}
   - {fileID: 253306873}
   - {fileID: 1749614269}
---- !u!50 &1412633905 stripped
-Rigidbody2D:
-  m_CorrespondingSourceObject: {fileID: 6323299619718044438, guid: 7b21c60051696af41a8175c795cfedb5, type: 3}
-  m_PrefabInstance: {fileID: 3234129813883609888}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1412633909
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1412633898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00032f820969b476685ab84f5bfdfeb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
-  rb: {fileID: 1412633905}
-  feet: {fileID: 1672149031}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  jumpForce: 375
-  doubleJumpForce: 200
-  grounded: 0
-  extraJumps: 1
-  radius: 0.3
-  endLag: 0
-  hitboxes:
-  - {fileID: 1902896682}
-  hitboxSizes:
-  - 0.3
-  knockbacks:
-  - {x: 25, y: 300}
---- !u!4 &1672149031 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2149082907869043092, guid: 7b21c60051696af41a8175c795cfedb5, type: 3}
-  m_PrefabInstance: {fileID: 3234129813883609888}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1686820677
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,14 +667,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1902896681}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1, y: 0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1686820678}
-  m_Father: {fileID: 1240066521}
-  m_RootOrder: 1
+  m_Father: {fileID: 24300062}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &2084000132 stripped
 RectTransform:
@@ -815,6 +807,38 @@ PrefabInstance:
     - target: {fileID: 5574863287299703273, guid: 7b21c60051696af41a8175c795cfedb5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618316909866586426, guid: 7b21c60051696af41a8175c795cfedb5, type: 3}
+      propertyPath: doubleJumpForce
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618316909866586426, guid: 7b21c60051696af41a8175c795cfedb5, type: 3}
+      propertyPath: hitboxes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618316909866586426, guid: 7b21c60051696af41a8175c795cfedb5, type: 3}
+      propertyPath: knockbacks.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618316909866586426, guid: 7b21c60051696af41a8175c795cfedb5, type: 3}
+      propertyPath: hitboxSizes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618316909866586426, guid: 7b21c60051696af41a8175c795cfedb5, type: 3}
+      propertyPath: hitboxes.Array.data[0]
+      value: 
+      objectReference: {fileID: 1902896682}
+    - target: {fileID: 5618316909866586426, guid: 7b21c60051696af41a8175c795cfedb5, type: 3}
+      propertyPath: hitboxSizes.Array.data[0]
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618316909866586426, guid: 7b21c60051696af41a8175c795cfedb5, type: 3}
+      propertyPath: knockbacks.Array.data[0].x
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618316909866586426, guid: 7b21c60051696af41a8175c795cfedb5, type: 3}
+      propertyPath: knockbacks.Array.data[0].y
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 6024263028138242536, guid: 7b21c60051696af41a8175c795cfedb5, type: 3}
       propertyPath: m_LocalPosition.x
