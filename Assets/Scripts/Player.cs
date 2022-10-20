@@ -1,52 +1,70 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour
+public class PlayerGamepad : MonoBehaviour
 {
-    // Variables related to movement
+    // Movement
     public int speed = 5;
-    public int jumpForce = 800;
-
+    public Rigidbody2D rb;
     public Transform feet;
     public LayerMask groundLayer;
-    public float radius = 0.3f;
-    public bool grounded = false;
+    public float jumpForce = 500f;
+    public float doubleJumpForce = 250f;
+    public bool grounded;
     public int extraJumps = 1;
-    public float health;
-    public InputAction playerControls;
+    public float radius = 0.3f;
 
-    public Rigidbody2D rb;
-    float xSpeed = 0;
+    // New Input System
+    private PlayerControls controls;
+    Vector2 move;
 
-
-    // Variables related to combat
-    public double endLag = 0;
-    //float hitStun = 0;
-
+    // Combat
+    public double endLag;
     public Transform[] hitboxes;
     public float[] hitboxSizes;
     public Vector2[] knockbacks;
 
+    private void Awake() {
+        controls = new PlayerControls();
+    }
 
-    void Update() {
+    private void OnEnable() {
+        controls.Enable();
+    }
+
+    private void OnDisable() {
+        controls.Disable();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         if (endLag <= 0) {
+            move = controls.Player.Move.ReadValue<Vector2>();
             grounded = Physics2D.OverlapCircle(feet.position, radius, groundLayer);
-            if(Input.GetButtonDown("Jump"))
-            {
+            //controls.Player.Jump.ReadValue<float>();
+            if (controls.Player.Jump.triggered) {
                 if (grounded) {
                     rb.AddForce(new Vector2(rb.velocity.x, jumpForce));
                 } else {
                     if (extraJumps > 0) {
                         extraJumps -= 1;
-                        rb.AddForce(new Vector2(rb.velocity.x, jumpForce));
+                        rb.AddForce(new Vector2(rb.velocity.x, doubleJumpForce));
                     }
                 }
             }
             if (grounded) {
                 extraJumps = 1;
             }
-            
-            if(Input.GetMouseButtonDown(0) && grounded) {
+
+            if(controls.Player.NormalAttack.triggered && grounded) {
                 endLag = 0.5;
                 Debug.Log(endLag);
                 rb.velocity = new Vector2(0, rb.velocity.y);
@@ -64,13 +82,12 @@ public class Player : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         if (endLag <= 0) {
-            xSpeed = Input.GetAxis("Horizontal") * speed;
-            rb.velocity = new Vector2(xSpeed, rb.velocity.y);
+            rb.velocity = new Vector2(move.x * speed, rb.velocity.y);
         }
     }
+
 
     void LateUpdate()
     {
@@ -78,6 +95,7 @@ public class Player : MonoBehaviour
             endLag -= Time.deltaTime;
         }
     }
+
 
     void OnDrawGizmosSelected()
     {
