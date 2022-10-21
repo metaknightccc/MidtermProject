@@ -78,6 +78,9 @@ TagManager:
   - name: 2
     uniqueID: 744600173
     locked: 0
+  - name: player
+    uniqueID: 3526102393
+    locked: 0
   - name: 1(ground)
     uniqueID: 220721595
     locked: 0
