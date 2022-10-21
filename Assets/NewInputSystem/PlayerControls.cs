@@ -62,6 +62,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RightStickNormal"",
+                    ""type"": ""Value"",
+                    ""id"": ""ef830a10-5f3b-40aa-8838-72d2f05a32c0"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -315,6 +324,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b2f1ef30-d197-4659-a8f5-6de30444c2d0"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightStickNormal"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -906,6 +926,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_NormalAttack = m_Player.FindAction("Normal Attack", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Player_RightStickNormal = m_Player.FindAction("RightStickNormal", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -981,6 +1002,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_NormalAttack;
     private readonly InputAction m_Player_Jump;
+    private readonly InputAction m_Player_RightStickNormal;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -989,6 +1011,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @NormalAttack => m_Wrapper.m_Player_NormalAttack;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputAction @RightStickNormal => m_Wrapper.m_Player_RightStickNormal;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1010,6 +1033,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @RightStickNormal.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightStickNormal;
+                @RightStickNormal.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightStickNormal;
+                @RightStickNormal.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightStickNormal;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1026,6 +1052,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @RightStickNormal.started += instance.OnRightStickNormal;
+                @RightStickNormal.performed += instance.OnRightStickNormal;
+                @RightStickNormal.canceled += instance.OnRightStickNormal;
             }
         }
     }
@@ -1186,6 +1215,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnNormalAttack(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnRightStickNormal(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
