@@ -1688,30 +1688,6 @@ RectTransform:
   m_AnchoredPosition: {x: 216, y: -51}
   m_SizeDelta: {x: 73.1261, y: 79.84448}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1762942256 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4709526446305321366, guid: 7b21c60051696af41a8175c795cfedb5, type: 3}
-  m_PrefabInstance: {fileID: 3234129813883609888}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1762942257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1762942256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0574dfaceb8eac549a640ba8106fb3a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rateText: {fileID: 0}
-  hearts:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &1902896681
 GameObject:
   m_ObjectHideFlags: 0
@@ -1957,7 +1933,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3234129814063720172, guid: 7b21c60051696af41a8175c795cfedb5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.3238
+      value: -1.3237998
       objectReference: {fileID: 0}
     - target: {fileID: 3234129814063720172, guid: 7b21c60051696af41a8175c795cfedb5, type: 3}
       propertyPath: m_LocalPosition.z
