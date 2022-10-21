@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -49,7 +50,17 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //Sets the blastzones
+        if (SceneManager.GetActiveScene().name == "Stage3"){
+            blastzoneX = 35f;
+            blastzoneCeiling = 10f;
+            blastzoneFloor = -10f;
+        }
+        if (SceneManager.GetActiveScene().name == "Test"){
+            blastzoneX = 20f;
+            blastzoneCeiling = 10f;
+            blastzoneFloor = -8f;
+        }
     }
 
     // Update is called once per frame

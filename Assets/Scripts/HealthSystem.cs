@@ -26,7 +26,7 @@ public class HealthSystem : MonoBehaviour
         if (isDead == true)
         {
             Debug.Log("Dead");
-            SceneManager.LoadScene("Test"); // change to win page
+            SceneManager.LoadScene("StageSelect"); // change to win page
         }
     }
 
