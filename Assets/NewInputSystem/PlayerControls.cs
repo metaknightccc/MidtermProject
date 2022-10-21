@@ -46,7 +46,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Normal Attack"",
+                    ""name"": ""NormalAttack"",
                     ""type"": ""Button"",
                     ""id"": ""efc535fa-a4c4-4f44-9a38-8df45db4b6d3"",
                     ""expectedControlType"": ""Button"",
@@ -71,6 +71,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SpecialAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""f303ae34-6c5e-47ff-a066-f5e1e84b3de8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -246,7 +255,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""Normal Attack"",
+                    ""action"": ""NormalAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -257,7 +266,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Normal Attack"",
+                    ""action"": ""NormalAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -268,7 +277,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Touch"",
-                    ""action"": ""Normal Attack"",
+                    ""action"": ""NormalAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -279,7 +288,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Joystick"",
-                    ""action"": ""Normal Attack"",
+                    ""action"": ""NormalAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -290,7 +299,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""XR"",
-                    ""action"": ""Normal Attack"",
+                    ""action"": ""NormalAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -335,6 +344,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""RightStickNormal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e97d2e4a-e0f7-443c-80f3-be79763bd518"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpecialAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -924,9 +944,10 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
-        m_Player_NormalAttack = m_Player.FindAction("Normal Attack", throwIfNotFound: true);
+        m_Player_NormalAttack = m_Player.FindAction("NormalAttack", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_RightStickNormal = m_Player.FindAction("RightStickNormal", throwIfNotFound: true);
+        m_Player_SpecialAttack = m_Player.FindAction("SpecialAttack", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1003,6 +1024,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_NormalAttack;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_RightStickNormal;
+    private readonly InputAction m_Player_SpecialAttack;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -1012,6 +1034,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @NormalAttack => m_Wrapper.m_Player_NormalAttack;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @RightStickNormal => m_Wrapper.m_Player_RightStickNormal;
+        public InputAction @SpecialAttack => m_Wrapper.m_Player_SpecialAttack;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1036,6 +1059,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @RightStickNormal.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightStickNormal;
                 @RightStickNormal.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightStickNormal;
                 @RightStickNormal.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightStickNormal;
+                @SpecialAttack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecialAttack;
+                @SpecialAttack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecialAttack;
+                @SpecialAttack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecialAttack;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1055,6 +1081,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @RightStickNormal.started += instance.OnRightStickNormal;
                 @RightStickNormal.performed += instance.OnRightStickNormal;
                 @RightStickNormal.canceled += instance.OnRightStickNormal;
+                @SpecialAttack.started += instance.OnSpecialAttack;
+                @SpecialAttack.performed += instance.OnSpecialAttack;
+                @SpecialAttack.canceled += instance.OnSpecialAttack;
             }
         }
     }
@@ -1216,6 +1245,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnNormalAttack(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnRightStickNormal(InputAction.CallbackContext context);
+        void OnSpecialAttack(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

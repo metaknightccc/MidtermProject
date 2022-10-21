@@ -7,10 +7,13 @@ public class Dummy : MonoBehaviour
     public float blastzoneX = 20f;
     public float blastzoneCeiling = 20f;
     public float blastzoneFloor = -10f;
+    public HealthSystem stocks;
     
     void Respawn() {
         // Lose a stock
         // Percent = 0
+        stocks.LoseOneHeart();
+        
         gameObject.SetActive(true);
         gameObject.transform.position = new Vector2(0, 5);
         gameObject.tag = "InvulnerablePlayer";

@@ -24,7 +24,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Normal Attack",
+                    "name": "NormalAttack",
                     "type": "Button",
                     "id": "efc535fa-a4c4-4f44-9a38-8df45db4b6d3",
                     "expectedControlType": "Button",
@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "SpecialAttack",
+                    "type": "Button",
+                    "id": "f303ae34-6c5e-47ff-a066-f5e1e84b3de8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -224,7 +233,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Normal Attack",
+                    "action": "NormalAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -235,7 +244,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Normal Attack",
+                    "action": "NormalAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -246,7 +255,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Touch",
-                    "action": "Normal Attack",
+                    "action": "NormalAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -257,7 +266,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "Normal Attack",
+                    "action": "NormalAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -268,7 +277,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "XR",
-                    "action": "Normal Attack",
+                    "action": "NormalAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -313,6 +322,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "RightStickNormal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e97d2e4a-e0f7-443c-80f3-be79763bd518",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpecialAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

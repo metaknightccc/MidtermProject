@@ -24,9 +24,12 @@ public class Player : MonoBehaviour
     public Transform[] hitboxes;
     public float[] hitboxSizes;
     public Vector2[] knockbacks;
+    public float[] moveDamages;
     Vector2 kb;
     Vector2 cstick;
-    int direction;
+    int recovery = 1;
+    int direction = 1;
+    int airSideSpecial = 1;
     public float blastzoneX = 20f;
     public float blastzoneCeiling = 20f;
     public float blastzoneFloor = -10f;
@@ -55,6 +58,12 @@ public class Player : MonoBehaviour
         move = controls.Player.Move.ReadValue<Vector2>();
         cstick = controls.Player.RightStickNormal.ReadValue<Vector2>();
 
+        if (grounded) {
+            extraJumps = 1;
+            recovery = 1;
+            airSideSpecial = 1;
+        }
+
         if (endLag <= 0) {
             grounded = Physics2D.OverlapCircle(feet.position, radius, groundLayer);
             //controls.Player.Jump.ReadValue<float>();
@@ -68,9 +77,6 @@ public class Player : MonoBehaviour
                         rb.AddForce(new Vector2(rb.velocity.x, doubleJumpForce));
                     }
                 }
-            }
-            if (grounded) {
-                extraJumps = 1;
             }
 
             if(controls.Player.NormalAttack.triggered) {
@@ -105,6 +111,9 @@ public class Player : MonoBehaviour
                         StartCoroutine(attackHitbox(0.067f, 7));
                     } else if (move.y < -.5) {
                         Debug.Log("Down Air");
+                        endLag = 0.95f;
+                        rb.velocity = new Vector2(0, -2);
+                        // Add hitboxes onto this
                     } else if (move.x * direction > 0.2) {
                         Debug.Log("Forward Air");
                         endLag = 0.5f;
@@ -153,6 +162,8 @@ public class Player : MonoBehaviour
                         StartCoroutine(attackHitbox(0.067f, 7));
                     } else if (cstick.y < -.5) { // Down Air
                         Debug.Log("Down Air");
+                        endLag = 0.95f;
+                        rb.velocity = new Vector2(0, -2);
                     } else if (cstick.x * direction > 0.5) { // Forward Air
                         Debug.Log("Forward Air");
                         endLag = 0.5f;
@@ -162,6 +173,43 @@ public class Player : MonoBehaviour
                         endLag = 0.75f;
                         StartCoroutine(attackHitbox(0.183f, 6));
                     }
+                } 
+            } else if (controls.Player.SpecialAttack.triggered) {
+                if (move.y > .5 && recovery > 0) { // up special
+                    Debug.Log("Up Special");
+                    endLag = 1.1f;
+                    rb.velocity = new Vector2(0, 10);
+                    recovery -= 1; //so you can't spam up specials without landing
+                } else if (move.y < -.5) { // down special
+                    Debug.Log("Down Special");
+                    endLag = 0.67f;
+                    gameObject.tag = "InvulnerablePlayer";
+                    Invoke("MakeVulnerable", 0.1f);
+                    StartCoroutine(attackHitbox(0.217f, 12));
+                } else if (move.x > .2 && airSideSpecial > 0){ // side special facing right
+                    gameObject.transform.localScale = new Vector3(1,1,1);
+                    direction = 1;
+                    Debug.Log("Side Special right");
+                    endLag = 0.9f;
+                    rb.constraints = RigidbodyConstraints2D.FreezePositionY;
+                    rb.velocity = new Vector2(6.67f * direction, 0);
+                    Invoke("unfreezeY", endLag-0.1f);
+                    airSideSpecial -= 1;
+                    //Add hitboxes
+                } else if (move.x < -.2 & airSideSpecial > 0){ // side special facing left
+                    gameObject.transform.localScale = new Vector3(-1,1,1);
+                    direction = -1;
+                    Debug.Log("Side Special left");
+                    endLag = 0.9f;
+                    rb.constraints = RigidbodyConstraints2D.FreezePositionY;
+                    rb.velocity = new Vector2(6.67f * direction, 0);
+                    Invoke("unfreezeY", endLag-0.1f);
+                    airSideSpecial -= 1;
+                    //Add hitboxes
+                } else { // neutral special
+                    Debug.Log("Neutral Special");
+                    endLag = 0.78f;
+                    StartCoroutine(attackHitbox(0.33f, 9));
                 }
             }
         }
@@ -174,6 +222,7 @@ public class Player : MonoBehaviour
             // Add check for self hitbox
             if (nearby.tag == "Player") {
                 Rigidbody2D enemyRB = nearby.GetComponent<Rigidbody2D>();
+                HealthSystem enemyHealth = nearby.GetComponent<HealthSystem>();
                 if (enemyRB == rb) { // To prevent the player knocking themselves back
                     enemyRB = null;
                 }
@@ -181,7 +230,7 @@ public class Player : MonoBehaviour
                     Debug.Log("Hit");
                     kb = new Vector2(knockbacks[hbIndex].x * direction, knockbacks[hbIndex].y);
                     enemyRB.velocity = new Vector2(0, 0);
-                    
+                    enemyHealth.Damage(moveDamages[hbIndex]);
                     enemyRB.AddForce(kb);
                 }
             }
@@ -201,6 +250,11 @@ public class Player : MonoBehaviour
 
     void MakeVulnerable() {
         gameObject.tag = "Player";
+    }
+
+
+    void unfreezeY() {
+        rb.constraints &= ~RigidbodyConstraints2D.FreezePositionY;
     }
 
 
@@ -241,7 +295,7 @@ public class Player : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
-        for (int i = 0; i < hitboxes.Length; i++) {
+        for (int i = 9; i < hitboxes.Length; i++) {
             Gizmos.DrawWireSphere(hitboxes[i].position, hitboxSizes[i]);
         }
     }

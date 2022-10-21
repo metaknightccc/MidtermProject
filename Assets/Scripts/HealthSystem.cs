@@ -13,7 +13,7 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] private GameObject[] hearts;
     private int life;
     private bool isDead;
-    private float rate=0f;
+    public float rate=0f;
 
     private void Start()
     {
@@ -22,6 +22,7 @@ public class HealthSystem : MonoBehaviour
 
     void Update()
     {
+        rateText.text = rate.ToString()+"%";
         if (isDead == true)
         {
             Debug.Log("Dead");
@@ -47,7 +48,6 @@ public class HealthSystem : MonoBehaviour
     public void Damage(float damage)
     {
         rate += damage;
-        rateText.text = rate.ToString()+"%";
     }
     
     public bool Health(int healthValue)
