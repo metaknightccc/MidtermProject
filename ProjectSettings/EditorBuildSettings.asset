@@ -9,8 +9,14 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 4f99dc3a8dcf8ae428538f4bc071032a
   - enabled: 1
+    path: Assets/Scenes/StageSelect.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
     path: Assets/Scenes/Test.unity
     guid: 1ba81fbf5e75542a78a12184da325c7f
+  - enabled: 1
+    path: Assets/Scenes/Stage3.unity
+    guid: d42fc1d41abc6cd40b826a8ebf3a684a
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
