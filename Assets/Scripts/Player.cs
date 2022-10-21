@@ -128,7 +128,7 @@ public class Player : MonoBehaviour
                     if (cstick.y > .5) { // Up tilt
                         endLag = 0.5f;
                         Debug.Log("Up tilt");
-                        StartCoroutine(attackHitbox(0.15f, 3));
+                        StartCoroutine(attackHitbox(0.15f, 2));
                     } else if (cstick.y < -.5) { // Down tilt
                         endLag = 0.25f;
                         Debug.Log("Down tilt");
@@ -138,13 +138,13 @@ public class Player : MonoBehaviour
                         direction = 1;
                         endLag = 0.65f;
                         Debug.Log("Side tilt right");
-                        StartCoroutine(attackHitbox(0.217f, 2));
+                        StartCoroutine(attackHitbox(0.217f, 3));
                     } else if (cstick.x < -0.5){ // Side stick facing left
                         gameObject.transform.localScale = new Vector3(-1,1,1);
                         direction = -1;
                         endLag = 0.65f;
                         Debug.Log("Side tilt left");
-                        StartCoroutine(attackHitbox(0.217f, 2));
+                        StartCoroutine(attackHitbox(0.217f, 3));
                     }
                 } else { // Aerial attacks
                     if (cstick.y > .5) { // Up Air
