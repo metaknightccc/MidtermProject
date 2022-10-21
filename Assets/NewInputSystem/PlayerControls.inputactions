@@ -40,15 +40,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "RightStickNormal",
-                    "type": "Value",
-                    "id": "db465376-ca88-40f2-a8e2-4ac3f4153af1",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -302,17 +293,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "2aa8ad84-4fe1-40fa-8161-8452050c99f9",
-                    "path": "<Gamepad>/rightStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "RightStickNormal",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
