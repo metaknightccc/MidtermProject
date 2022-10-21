@@ -241,7 +241,7 @@ public class Player : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
-        for (int i = 0; i > hitboxes.Length; i++) {
+        for (int i = 0; i < hitboxes.Length; i++) {
             Gizmos.DrawWireSphere(hitboxes[i].position, hitboxSizes[i]);
         }
     }
