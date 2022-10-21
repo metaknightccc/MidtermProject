@@ -42,30 +42,45 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Ground_Back_2
+  - name: 11
+    uniqueID: 3658848657
+    locked: 0
+  - name: 10
+    uniqueID: 2244225517
+    locked: 0
+  - name: 9
+    uniqueID: 2620741715
+    locked: 0
+  - name: 8
+    uniqueID: 3666743813
+    locked: 0
+  - name: 7
+    uniqueID: 827140739
+    locked: 0
+  - name: 6
+    uniqueID: 2135342937
+    locked: 0
+  - name: 5
     uniqueID: 2857775807
     locked: 0
   - name: Fog_Back_2
     uniqueID: 4251588135
     locked: 0
-  - name: Ground_Back_1
+  - name: 4
     uniqueID: 2692394367
     locked: 0
   - name: Fog_Back_1
     uniqueID: 3600400705
     locked: 0
-  - name: Ground
+  - name: 3
     uniqueID: 3740246583
     locked: 0
-  - name: Player
-    uniqueID: 1666631021
-    locked: 0
-  - name: Ground_Front_1
+  - name: 2
     uniqueID: 744600173
     locked: 0
-  - name: Fog_Front_1
+  - name: 1(ground)
     uniqueID: 220721595
     locked: 0
-  - name: Ground_Front_2
+  - name: 0
     uniqueID: 314521491
     locked: 0
