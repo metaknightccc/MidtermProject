@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
                     if (move.y > .5) {
                         Debug.Log("Up tilt");
                         endLag = 0.5f;
-                        StartCoroutine(attackHitbox(0.15f, 3));
+                        StartCoroutine(attackHitbox(0.15f, 2));
                     } else if (move.y < -.5) {
                         Debug.Log("Down tilt");
                         endLag = 0.25f;
@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
                     } else if (move.x > .2 || move.x < -.2) {
                         Debug.Log("Side tilt");
                         endLag = 0.65f;
-                        StartCoroutine(attackHitbox(0.217f, 2));
+                        StartCoroutine(attackHitbox(0.217f, 3));
                     } else {
                         endLag = 0.5f;
                         Debug.Log("Jab");
