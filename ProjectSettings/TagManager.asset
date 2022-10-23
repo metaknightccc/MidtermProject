@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - InvulnerablePlayer
+  - Ground
+  - Ice
   layers:
   - Default
   - TransparentFX
@@ -12,7 +14,7 @@ TagManager:
   - Ground
   - Water
   - UI
-  - 
+  - Ice
   - 
   - 
   - 
@@ -39,6 +41,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Layer0
+    uniqueID: 803880029
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class Player : MonoBehaviour
 {
     // Movement
-    public int speed = 5;
+    public float speed = 5;
     public Rigidbody2D rb;
     public Transform feet;
     public LayerMask groundLayer;
+    public LayerMask iceLayer;
     public float jumpForce = 250f;
     public float doubleJumpForce = 250f;
     public bool grounded;
+    public bool iced;
     public int extraJumps = 1;
     public float radius = 0.3f;
 
@@ -69,7 +72,7 @@ public class Player : MonoBehaviour
         move = controls.Player.Move.ReadValue<Vector2>();
         cstick = controls.Player.RightStickNormal.ReadValue<Vector2>();
 
-        if (grounded) {
+        if (grounded || iced) {
             extraJumps = 1;
             recovery = 1;
             airSideSpecial = 1;
@@ -77,9 +80,10 @@ public class Player : MonoBehaviour
 
         if (endLag <= 0) {
             grounded = Physics2D.OverlapCircle(feet.position, radius, groundLayer);
+            iced = Physics2D.OverlapCircle(feet.position, radius, iceLayer);
             //controls.Player.Jump.ReadValue<float>();
             if (controls.Player.Jump.triggered) {
-                if (grounded) {
+                if (grounded || iced) {
                     rb.AddForce(new Vector2(rb.velocity.x, jumpForce));
                 } else {
                     if (extraJumps > 0) {
@@ -91,7 +95,7 @@ public class Player : MonoBehaviour
             }
 
             if(controls.Player.NormalAttack.triggered) {
-                if (grounded) { // Grounded attacks
+                if (grounded || iced) { // Grounded attacks
                     if (move.y > .5) {
                         Debug.Log("Up tilt");
                         endLag = 0.5f;
@@ -143,7 +147,7 @@ public class Player : MonoBehaviour
                 // Control stick alternatively inputting moves
                 // Cannot input neutral attacks (jab, neutral air)
                 // since there is no neutral value for sticks
-                if (grounded) { // Grounded attacks
+                if (grounded || iced) { // Grounded attacks
                     rb.velocity = new Vector2(0, rb.velocity.y);
                     if (cstick.y > .5) { // Up tilt
                         endLag = 0.5f;
@@ -270,14 +274,32 @@ public class Player : MonoBehaviour
 
 
     void FixedUpdate() {
-        if (endLag <= 0 || grounded == false) {
+        if (iced == false && grounded == false) {
+            rb.velocity = new Vector2(move.x * speed, rb.velocity.y);
+        }        
+        if (endLag <= 0 && iced == true) {
+            float x = rb.velocity.x + (move.x * (speed/60));
+            if(x > 6)
+            {
+                x = 6;
+            }
+            else if(x < -6)
+            {
+                x = -6;
+            }
+            rb.velocity = new Vector2(x, rb.velocity.y);
+            
+        }
+        if (endLag <= 0 && grounded == true) {
             rb.velocity = new Vector2(move.x * speed, rb.velocity.y);
         }
-        if (move.x < -0.2 && grounded) { //facing left on ground
+        print(move.x);
+        if (move.x < -0.2 && (grounded || iced)) { //facing left on ground
+        
             gameObject.transform.localScale = new Vector3(-1,1,1);
             direction = -1;
         }
-        if (move.x > 0.2 && grounded) { //facing right on ground
+        if (move.x > 0.2 && (grounded || iced)) { //facing right on ground
             gameObject.transform.localScale = new Vector3(1,1,1);
             direction = 1;
         }
