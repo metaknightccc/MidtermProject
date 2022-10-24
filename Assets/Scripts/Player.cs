@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
 
     // Animation
     public Animator playerAnimator;
+    bool didDoubleJump;
 
     private void Awake() {
         controls = new PlayerControls();
@@ -93,6 +94,8 @@ public class Player : MonoBehaviour
                         extraJumps -= 1;
                         rb.velocity = new Vector2(rb.velocity.x, 0);
                         rb.AddForce(new Vector2(rb.velocity.x, doubleJumpForce));
+                        didDoubleJump = true;
+                        Invoke("setFalse", 0.5f);
                     }
                 }
             }
@@ -275,6 +278,11 @@ public class Player : MonoBehaviour
         gameObject.tag = "Player";
     }
 
+    
+    void setFalse() {
+        didDoubleJump = false;
+    }
+
 
     void unfreezeY() {
         rb.constraints &= ~RigidbodyConstraints2D.FreezePositionY;
@@ -301,7 +309,6 @@ public class Player : MonoBehaviour
         if (endLag <= 0 && grounded == true) {
             rb.velocity = new Vector2(move.x * speed, rb.velocity.y);
         }
-        print(move.x);
         if (move.x < -0.2 && (grounded || iced)) { //facing left on ground
         
             gameObject.transform.localScale = new Vector3(-1,1,1);
@@ -325,6 +332,9 @@ public class Player : MonoBehaviour
         }
 
         playerAnimator.SetFloat("Speed", rb.velocity.x * direction);
+        playerAnimator.SetBool("isGrounded", grounded);
+        playerAnimator.SetBool("doubleJump", didDoubleJump);
+        Debug.Log(controls.Player.Jump.triggered);
     }
 
 
