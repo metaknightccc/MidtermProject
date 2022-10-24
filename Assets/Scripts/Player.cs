@@ -38,6 +38,9 @@ public class Player : MonoBehaviour
     public float blastzoneCeiling = 20f;
     public float blastzoneFloor = -10f;
 
+    // Animation
+    public Animator playerAnimator;
+
     private void Awake() {
         controls = new PlayerControls();
     }
@@ -190,6 +193,7 @@ public class Player : MonoBehaviour
                     }
                 } 
             } else if (controls.Player.SpecialAttack.triggered) {
+                /*
                 if (move.y > .5 && recovery > 0) { // up special
                     Debug.Log("Up Special");
                     endLag = 1.1f;
@@ -226,6 +230,10 @@ public class Player : MonoBehaviour
                     endLag = 0.78f;
                     StartCoroutine(attackHitbox(0.33f, 9));
                 }
+                */
+                Debug.Log("Neutral Special");
+                endLag = 0.78f;
+                StartCoroutine(attackHitbox(0.33f, 9));
             }
         }
     }
@@ -315,6 +323,8 @@ public class Player : MonoBehaviour
             gameObject.SetActive(false);
             Invoke("Respawn", 1f);
         }
+
+        playerAnimator.SetFloat("Speed", rb.velocity.x * direction);
     }
 
 
