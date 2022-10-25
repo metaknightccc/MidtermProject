@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     public bool grounded;
     public bool iced;
     public int extraJumps = 1;
+    public int extraJump = 5; //changes per character
     public float radius = 0.3f;
 
     // New Input System
@@ -78,7 +79,7 @@ public class Player : MonoBehaviour
         cstick = controls.Player.RightStickNormal.ReadValue<Vector2>();
 
         if (grounded || iced) {
-            extraJumps = 5; 
+            extraJumps = extraJump; 
             //recovery = 1;
             //airSideSpecial = 1;
         }
