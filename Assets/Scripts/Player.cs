@@ -104,22 +104,26 @@ public class Player : MonoBehaviour
                 if (grounded || iced) { // Grounded attacks
                     if (move.y > .5) {
                         Debug.Log("Up tilt");
+                        playerAnimator.SetTrigger("upAttack");
                         endLag = 0.5f;
                         StartCoroutine(attackHitbox(0.15f, 2));
                     } else if (move.y < -.5) {
                         Debug.Log("Down tilt");
+                        playerAnimator.SetTrigger("downAttack");
                         endLag = 0.25f;
                         StartCoroutine(attackHitbox(0.117f, 1));
                     } else if (move.x > .2 || move.x < -.2) {
                         Debug.Log("Side tilt");
+                        playerAnimator.SetTrigger("sideAttack");
                         endLag = 0.65f;
                         StartCoroutine(attackHitbox(0.217f, 3));
                     } else {
                         endLag = 0.5f;
                         Debug.Log("Jab");
+                        playerAnimator.SetTrigger("neutralAttack");
                         // The following program is exclusive to this character's jab only
                         gameObject.tag = "InvulnerablePlayer";
-                        rb.AddForce(new Vector2(100 * direction, 0));
+                        //rb.AddForce(new Vector2(100 * direction, 0));
                         Invoke("MakeVulnerable", 0.2f);
                         // The above 3 lines is inspired by electric wind god fist
 
@@ -128,15 +132,18 @@ public class Player : MonoBehaviour
                 } else { // Aerial attacks
                     if (move.y > .5) {
                         Debug.Log("Up Air");
+                        playerAnimator.SetTrigger("upAttack");
                         endLag = 0.55f;
                         StartCoroutine(attackHitbox(0.067f, 7));
                     } else if (move.y < -.5) {
                         Debug.Log("Down Air");
+                        playerAnimator.SetTrigger("downAttack");
                         endLag = 0.95f;
                         rb.velocity = new Vector2(0, -2);
                         // Add hitboxes onto this
                     } else if (move.x * direction > 0.2) {
                         Debug.Log("Forward Air");
+                        playerAnimator.SetTrigger("sideAttack");
                         endLag = 0.5f;
                         StartCoroutine(attackHitbox(0.133f, 5));
                     } else if (move.x * direction < -0.2) {
@@ -145,6 +152,7 @@ public class Player : MonoBehaviour
                         StartCoroutine(attackHitbox(0.183f, 6));
                     } else {
                         Debug.Log("Neutral Air");
+                        playerAnimator.SetTrigger("neutralAttack");
                         endLag = 0.467f;
                         StartCoroutine(attackHitbox(0.133f, 4));
                     }
@@ -158,35 +166,42 @@ public class Player : MonoBehaviour
                     if (cstick.y > .5) { // Up tilt
                         endLag = 0.5f;
                         Debug.Log("Up tilt");
+                        playerAnimator.SetTrigger("upAttack");
                         StartCoroutine(attackHitbox(0.15f, 2));
                     } else if (cstick.y < -.5) { // Down tilt
                         endLag = 0.25f;
                         Debug.Log("Down tilt");
+                        playerAnimator.SetTrigger("downAttack");
                         StartCoroutine(attackHitbox(0.117f, 1));
                     } else if (cstick.x > 0.5) { // Side tilt facing right
                         gameObject.transform.localScale = new Vector3(1,1,1);
                         direction = 1;
                         endLag = 0.65f;
                         Debug.Log("Side tilt right");
+                        playerAnimator.SetTrigger("sideAttack");
                         StartCoroutine(attackHitbox(0.217f, 3));
                     } else if (cstick.x < -0.5){ // Side stick facing left
                         gameObject.transform.localScale = new Vector3(-1,1,1);
                         direction = -1;
                         endLag = 0.65f;
+                        playerAnimator.SetTrigger("sideAttack");
                         Debug.Log("Side tilt left");
                         StartCoroutine(attackHitbox(0.217f, 3));
                     }
                 } else { // Aerial attacks
                     if (cstick.y > .5) { // Up Air
                         Debug.Log("Up Air");
+                        playerAnimator.SetTrigger("upAttack");
                         endLag = 0.55f;
                         StartCoroutine(attackHitbox(0.067f, 7));
                     } else if (cstick.y < -.5) { // Down Air
                         Debug.Log("Down Air");
+                        playerAnimator.SetTrigger("downAttack");
                         endLag = 0.95f;
                         rb.velocity = new Vector2(0, -2);
                     } else if (cstick.x * direction > 0.5) { // Forward Air
                         Debug.Log("Forward Air");
+                        playerAnimator.SetTrigger("sideAttack");
                         endLag = 0.5f;
                         StartCoroutine(attackHitbox(0.133f, 5));
                     } else if (cstick.x * direction < -0.5) { // Back Air
@@ -334,7 +349,6 @@ public class Player : MonoBehaviour
         playerAnimator.SetFloat("Speed", rb.velocity.x * direction);
         playerAnimator.SetBool("isGrounded", grounded);
         playerAnimator.SetBool("doubleJump", didDoubleJump);
-        Debug.Log(controls.Player.Jump.triggered);
     }
 
 
