@@ -175,9 +175,13 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  iceLayer:
+    serializedVersion: 2
+    m_Bits: 0
   jumpForce: 350
   doubleJumpForce: 350
   grounded: 0
+  iced: 0
   extraJumps: 1
   radius: 0.3
   endLag: 0
