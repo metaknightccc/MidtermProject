@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 6996811067738068166}
   - component: {fileID: -815733830384833281}
   - component: {fileID: 6899281319494037975}
+  - component: {fileID: -6672820260723815999}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -216,7 +217,7 @@ MonoBehaviour:
   - {x: 50, y: 50}
   - {x: 80, y: 50}
   - {x: -100, y: 50}
-  - {x: 0, y: 100}
+  - {x: 0, y: 0}
   - {x: 0, y: 0}
   moveDamages:
   - 5
@@ -231,6 +232,10 @@ MonoBehaviour:
   blastzoneX: 20
   blastzoneCeiling: 10
   blastzoneFloor: -8
+  specialProjectile: {fileID: 0}
+  specialForce: 0
+  downAirProjectile: {fileID: 0}
+  downAirForce: 0
   playerAnimator: {fileID: -815733830384833281}
 --- !u!95 &-815733830384833281
 Animator:
@@ -268,6 +273,24 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &-6672820260723815999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8930460924098412265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0574dfaceb8eac549a640ba8106fb3a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rateText: {fileID: 0}
+  hearts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  rate: 0
 --- !u!1001 &710484532540874327
 PrefabInstance:
   m_ObjectHideFlags: 0
