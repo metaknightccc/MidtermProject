@@ -232,9 +232,9 @@ MonoBehaviour:
   blastzoneX: 20
   blastzoneCeiling: 10
   blastzoneFloor: -8
-  specialProjectile: {fileID: 0}
+  specialProjectile: {fileID: 3686843195667440943, guid: cfb934c6b0ec040b29b410df0ae631e1, type: 3}
   specialForce: 0
-  downAirProjectile: {fileID: 0}
+  downAirProjectile: {fileID: 3954960569168820556, guid: c45fd78026a1248a99b24e4b914f73db, type: 3}
   downAirForce: 0
   playerAnimator: {fileID: -815733830384833281}
 --- !u!95 &-815733830384833281
