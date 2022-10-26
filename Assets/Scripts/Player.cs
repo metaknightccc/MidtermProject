@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     public bool grounded;
     public bool iced;
     public int extraJumps = 1;
+    public int extraJump = 5; //changes per character
     public float radius = 0.3f;
 
     // New Input System
@@ -31,12 +32,17 @@ public class Player : MonoBehaviour
     public float[] moveDamages;
     Vector2 kb;
     Vector2 cstick;
-    int recovery = 1;
+    float multiplier;
+    //int recovery = 1;
     int direction = 1;
-    int airSideSpecial = 1;
+    //int airSideSpecial = 1;
     public float blastzoneX = 20f;
     public float blastzoneCeiling = 20f;
     public float blastzoneFloor = -10f;
+
+    // Animation
+    public Animator playerAnimator;
+    bool didDoubleJump;
 
     private void Awake() {
         controls = new PlayerControls();
@@ -73,9 +79,9 @@ public class Player : MonoBehaviour
         cstick = controls.Player.RightStickNormal.ReadValue<Vector2>();
 
         if (grounded || iced) {
-            extraJumps = 1;
-            recovery = 1;
-            airSideSpecial = 1;
+            extraJumps = extraJump; 
+            //recovery = 1;
+            //airSideSpecial = 1;
         }
 
         if (endLag <= 0) {
@@ -90,6 +96,8 @@ public class Player : MonoBehaviour
                         extraJumps -= 1;
                         rb.velocity = new Vector2(rb.velocity.x, 0);
                         rb.AddForce(new Vector2(rb.velocity.x, doubleJumpForce));
+                        didDoubleJump = true;
+                        Invoke("setFalse", 0.5f);
                     }
                 }
             }
@@ -98,49 +106,56 @@ public class Player : MonoBehaviour
                 if (grounded || iced) { // Grounded attacks
                     if (move.y > .5) {
                         Debug.Log("Up tilt");
-                        endLag = 0.5f;
-                        StartCoroutine(attackHitbox(0.15f, 2));
+                        playerAnimator.SetTrigger("upAttack");
+                        endLag = 0.15f;
+                        StartCoroutine(attackHitbox(0.066f, 2, 0.5f));
                     } else if (move.y < -.5) {
                         Debug.Log("Down tilt");
-                        endLag = 0.25f;
-                        StartCoroutine(attackHitbox(0.117f, 1));
+                        playerAnimator.SetTrigger("downAttack");
+                        endLag = 0.15f;
+                        StartCoroutine(attackHitbox(0.066f, 1, 0));
                     } else if (move.x > .2 || move.x < -.2) {
                         Debug.Log("Side tilt");
-                        endLag = 0.65f;
-                        StartCoroutine(attackHitbox(0.217f, 3));
+                        playerAnimator.SetTrigger("sideAttack");
+                        endLag = 0.15f;
+                        StartCoroutine(attackHitbox(0.083f, 3, 0.75f));
                     } else {
-                        endLag = 0.5f;
+                        endLag = 0.15f;
                         Debug.Log("Jab");
+                        playerAnimator.SetTrigger("neutralAttack");
                         // The following program is exclusive to this character's jab only
-                        gameObject.tag = "InvulnerablePlayer";
-                        rb.AddForce(new Vector2(100 * direction, 0));
-                        Invoke("MakeVulnerable", 0.2f);
+                        //gameObject.tag = "InvulnerablePlayer";
+                        //rb.AddForce(new Vector2(100 * direction, 0));
+                        //Invoke("MakeVulnerable", 0.2f);
                         // The above 3 lines is inspired by electric wind god fist
 
-                        StartCoroutine(attackHitbox(0.125f, 0));
+                        StartCoroutine(attackHitbox(0.033f, 0, 0.5f));
                     }
                 } else { // Aerial attacks
                     if (move.y > .5) {
                         Debug.Log("Up Air");
-                        endLag = 0.55f;
-                        StartCoroutine(attackHitbox(0.067f, 7));
+                        playerAnimator.SetTrigger("upAttack");
+                        endLag = 0.25f;
+                        StartCoroutine(attackHitbox(0.067f, 7, 1.25f));
                     } else if (move.y < -.5) {
                         Debug.Log("Down Air");
-                        endLag = 0.95f;
-                        rb.velocity = new Vector2(0, -2);
+                        playerAnimator.SetTrigger("downAttack");
+                        endLag = 0.25f;
                         // Add hitboxes onto this
                     } else if (move.x * direction > 0.2) {
                         Debug.Log("Forward Air");
-                        endLag = 0.5f;
-                        StartCoroutine(attackHitbox(0.133f, 5));
+                        playerAnimator.SetTrigger("sideAttack");
+                        endLag = 0.25f;
+                        StartCoroutine(attackHitbox(0.083f, 5, 1.25f));
                     } else if (move.x * direction < -0.2) {
                         Debug.Log("Back Air");
-                        endLag = 0.75f;
-                        StartCoroutine(attackHitbox(0.183f, 6));
+                        endLag = 0.25f;
+                        StartCoroutine(attackHitbox(0.183f, 6, 1.5f));
                     } else {
                         Debug.Log("Neutral Air");
-                        endLag = 0.467f;
-                        StartCoroutine(attackHitbox(0.133f, 4));
+                        playerAnimator.SetTrigger("neutralAttack");
+                        endLag = 0.25f;
+                        StartCoroutine(attackHitbox(0.033f, 4, 1.25f));
                     }
                 }
             } else if (controls.Player.RightStickNormal.triggered) {
@@ -150,46 +165,53 @@ public class Player : MonoBehaviour
                 if (grounded || iced) { // Grounded attacks
                     rb.velocity = new Vector2(0, rb.velocity.y);
                     if (cstick.y > .5) { // Up tilt
-                        endLag = 0.5f;
+                        endLag = 0.15f;
                         Debug.Log("Up tilt");
-                        StartCoroutine(attackHitbox(0.15f, 2));
+                        playerAnimator.SetTrigger("upAttack");
+                        StartCoroutine(attackHitbox(0.067f, 2, 0.5f));
                     } else if (cstick.y < -.5) { // Down tilt
-                        endLag = 0.25f;
+                        endLag = 0.15f;
                         Debug.Log("Down tilt");
-                        StartCoroutine(attackHitbox(0.117f, 1));
+                        playerAnimator.SetTrigger("downAttack");
+                        StartCoroutine(attackHitbox(0.067f, 1, 0));
                     } else if (cstick.x > 0.5) { // Side tilt facing right
                         gameObject.transform.localScale = new Vector3(1,1,1);
                         direction = 1;
-                        endLag = 0.65f;
+                        endLag = 0.15f;
                         Debug.Log("Side tilt right");
-                        StartCoroutine(attackHitbox(0.217f, 3));
+                        playerAnimator.SetTrigger("sideAttack");
+                        StartCoroutine(attackHitbox(0.083f, 3, 0.75f));
                     } else if (cstick.x < -0.5){ // Side stick facing left
                         gameObject.transform.localScale = new Vector3(-1,1,1);
                         direction = -1;
-                        endLag = 0.65f;
+                        endLag = 0.15f;
+                        playerAnimator.SetTrigger("sideAttack");
                         Debug.Log("Side tilt left");
-                        StartCoroutine(attackHitbox(0.217f, 3));
+                        StartCoroutine(attackHitbox(0.083f, 3, 0.75f));
                     }
                 } else { // Aerial attacks
                     if (cstick.y > .5) { // Up Air
                         Debug.Log("Up Air");
-                        endLag = 0.55f;
-                        StartCoroutine(attackHitbox(0.067f, 7));
+                        playerAnimator.SetTrigger("upAttack");
+                        endLag = 0.25f;
+                        StartCoroutine(attackHitbox(0.067f, 7, 1.25f));
                     } else if (cstick.y < -.5) { // Down Air
                         Debug.Log("Down Air");
-                        endLag = 0.95f;
-                        rb.velocity = new Vector2(0, -2);
+                        playerAnimator.SetTrigger("downAttack");
+                        endLag = 0.25f;
                     } else if (cstick.x * direction > 0.5) { // Forward Air
                         Debug.Log("Forward Air");
-                        endLag = 0.5f;
-                        StartCoroutine(attackHitbox(0.133f, 5));
+                        playerAnimator.SetTrigger("sideAttack");
+                        endLag = 0.25f;
+                        StartCoroutine(attackHitbox(0.083f, 5, 1.25f));
                     } else if (cstick.x * direction < -0.5) { // Back Air
                         Debug.Log("Back Air");
                         endLag = 0.75f;
-                        StartCoroutine(attackHitbox(0.183f, 6));
+                        StartCoroutine(attackHitbox(0.183f, 6, 1.5f));
                     }
                 } 
             } else if (controls.Player.SpecialAttack.triggered) {
+                /*
                 if (move.y > .5 && recovery > 0) { // up special
                     Debug.Log("Up Special");
                     endLag = 1.1f;
@@ -226,11 +248,15 @@ public class Player : MonoBehaviour
                     endLag = 0.78f;
                     StartCoroutine(attackHitbox(0.33f, 9));
                 }
+                */
+                Debug.Log("Neutral Special");
+                endLag = 0.78f;
+                StartCoroutine(attackHitbox(0.33f, 9, 0));
             }
         }
     }
 
-    IEnumerator attackHitbox(float startup, int hbIndex) {
+    IEnumerator attackHitbox(float startup, int hbIndex, float kbMulti) {
         yield return new WaitForSeconds(startup);
         Collider2D[] colliders = Physics2D.OverlapCircleAll(hitboxes[hbIndex].position, hitboxSizes[hbIndex]);
         foreach (Collider2D nearby in colliders) {
@@ -242,11 +268,13 @@ public class Player : MonoBehaviour
                     enemyRB = null;
                 }
                 if (enemyRB != null) {
+                    float enemyPercent = nearby.GetComponent<HealthSystem>().rate;
                     Debug.Log("Hit");
                     kb = new Vector2(knockbacks[hbIndex].x * direction, knockbacks[hbIndex].y);
                     enemyRB.velocity = new Vector2(0, 0);
+                    multiplier = 1 + (enemyPercent * kbMulti / 50);
                     enemyHealth.Damage(moveDamages[hbIndex]);
-                    enemyRB.AddForce(kb);
+                    enemyRB.AddForce(kb * multiplier);
                 }
             }
         }
@@ -265,6 +293,11 @@ public class Player : MonoBehaviour
 
     void MakeVulnerable() {
         gameObject.tag = "Player";
+    }
+
+    
+    void setFalse() {
+        didDoubleJump = false;
     }
 
 
@@ -293,7 +326,6 @@ public class Player : MonoBehaviour
         if (endLag <= 0 && grounded == true) {
             rb.velocity = new Vector2(move.x * speed, rb.velocity.y);
         }
-        print(move.x);
         if (move.x < -0.2 && (grounded || iced)) { //facing left on ground
         
             gameObject.transform.localScale = new Vector3(-1,1,1);
@@ -315,6 +347,10 @@ public class Player : MonoBehaviour
             gameObject.SetActive(false);
             Invoke("Respawn", 1f);
         }
+
+        playerAnimator.SetFloat("Speed", rb.velocity.x * direction);
+        playerAnimator.SetBool("isGrounded", grounded);
+        playerAnimator.SetBool("doubleJump", didDoubleJump);
     }
 
 
@@ -328,7 +364,7 @@ public class Player : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
-        for (int i = 9; i < hitboxes.Length; i++) {
+        for (int i = 0; i < 4; i++) {
             Gizmos.DrawWireSphere(hitboxes[i].position, hitboxSizes[i]);
         }
     }
