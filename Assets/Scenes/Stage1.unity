@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &289518558 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1940986759236745318, guid: 52ca64112b8ba17418183344008cb019, type: 3}
+  m_PrefabInstance: {fileID: 3160745490394858194}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1994791722 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5778795225240361703, guid: 52ca64112b8ba17418183344008cb019, type: 3}
@@ -148,6 +153,11 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!50 &1994791727 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 5835549287651949284, guid: 52ca64112b8ba17418183344008cb019, type: 3}
+  m_PrefabInstance: {fileID: 3160745490394858194}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3160745490394858194
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -201,7 +211,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3160745488620947230, guid: 52ca64112b8ba17418183344008cb019, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.3238001
+      value: -1.3238
       objectReference: {fileID: 0}
     - target: {fileID: 3160745489716020596, guid: 52ca64112b8ba17418183344008cb019, type: 3}
       propertyPath: orthographic size
@@ -303,6 +313,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5387593638857683144, guid: 52ca64112b8ba17418183344008cb019, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 1994791727}
+    - target: {fileID: 5387593638857683144, guid: 52ca64112b8ba17418183344008cb019, type: 3}
+      propertyPath: feet
+      value: 
+      objectReference: {fileID: 289518558}
     - target: {fileID: 5387593638857683144, guid: 52ca64112b8ba17418183344008cb019, type: 3}
       propertyPath: jumpForce
       value: 300
