@@ -39,6 +39,10 @@ public class Player : MonoBehaviour
     public float blastzoneX = 20f;
     public float blastzoneCeiling = 20f;
     public float blastzoneFloor = -10f;
+    public GameObject specialProjectile;
+    public float specialForce;
+    public GameObject downAirProjectile;
+    public float downAirForce;
 
     // Animation
     public Animator playerAnimator;
@@ -128,7 +132,6 @@ public class Player : MonoBehaviour
                         //rb.AddForce(new Vector2(100 * direction, 0));
                         //Invoke("MakeVulnerable", 0.2f);
                         // The above 3 lines is inspired by electric wind god fist
-
                         StartCoroutine(attackHitbox(0.033f, 0, 0.5f));
                     }
                 } else { // Aerial attacks
@@ -136,11 +139,13 @@ public class Player : MonoBehaviour
                         Debug.Log("Up Air");
                         playerAnimator.SetTrigger("upAttack");
                         endLag = 0.25f;
-                        StartCoroutine(attackHitbox(0.067f, 7, 1.25f));
+                        StartCoroutine(attackHitbox(0.067f, 6, 1.25f));
                     } else if (move.y < -.5) {
                         Debug.Log("Down Air");
-                        playerAnimator.SetTrigger("downAttack");
-                        endLag = 0.25f;
+                        endLag = 0.583f;
+                        playerAnimator.SetTrigger("downAir");
+                        GameObject newMelon = Instantiate(downAirProjectile, hitboxes[7].position, Quaternion.identity);
+                        newMelon.GetComponent<Rigidbody2D>().AddForce(transform.up * -1 * downAirForce);
                         // Add hitboxes onto this
                     } else if (move.x * direction > 0.2) {
                         Debug.Log("Forward Air");
@@ -148,9 +153,12 @@ public class Player : MonoBehaviour
                         endLag = 0.25f;
                         StartCoroutine(attackHitbox(0.083f, 5, 1.25f));
                     } else if (move.x * direction < -0.2) {
+                        direction *= -1;
                         Debug.Log("Back Air");
+                        playerAnimator.SetTrigger("sideAttack");
+                        gameObject.transform.localScale = new Vector3(direction,1,1);
                         endLag = 0.25f;
-                        StartCoroutine(attackHitbox(0.183f, 6, 1.5f));
+                        StartCoroutine(attackHitbox(0.083f, 5, 1.25f));
                     } else {
                         Debug.Log("Neutral Air");
                         playerAnimator.SetTrigger("neutralAttack");
@@ -194,20 +202,25 @@ public class Player : MonoBehaviour
                         Debug.Log("Up Air");
                         playerAnimator.SetTrigger("upAttack");
                         endLag = 0.25f;
-                        StartCoroutine(attackHitbox(0.067f, 7, 1.25f));
+                        StartCoroutine(attackHitbox(0.067f, 6, 1.25f));
                     } else if (cstick.y < -.5) { // Down Air
                         Debug.Log("Down Air");
-                        playerAnimator.SetTrigger("downAttack");
-                        endLag = 0.25f;
+                        endLag = 0.583f;
+                        playerAnimator.SetTrigger("downAir");
+                        GameObject newMelon = Instantiate(downAirProjectile, hitboxes[7].position, Quaternion.identity);
+                        newMelon.GetComponent<Rigidbody2D>().AddForce(transform.up * -1 * downAirForce);
                     } else if (cstick.x * direction > 0.5) { // Forward Air
                         Debug.Log("Forward Air");
                         playerAnimator.SetTrigger("sideAttack");
                         endLag = 0.25f;
                         StartCoroutine(attackHitbox(0.083f, 5, 1.25f));
                     } else if (cstick.x * direction < -0.5) { // Back Air
+                        direction *= -1;
                         Debug.Log("Back Air");
-                        endLag = 0.75f;
-                        StartCoroutine(attackHitbox(0.183f, 6, 1.5f));
+                        playerAnimator.SetTrigger("sideAttack");
+                        gameObject.transform.localScale = new Vector3(direction,1,1);
+                        endLag = 0.25f;
+                        StartCoroutine(attackHitbox(0.083f, 5, 1.25f));
                     }
                 } 
             } else if (controls.Player.SpecialAttack.triggered) {
@@ -250,8 +263,10 @@ public class Player : MonoBehaviour
                 }
                 */
                 Debug.Log("Neutral Special");
-                endLag = 0.78f;
-                StartCoroutine(attackHitbox(0.33f, 9, 0));
+                endLag = 0.3f;
+                playerAnimator.SetTrigger("special");
+                GameObject newStar = Instantiate(specialProjectile, hitboxes[8].position, Quaternion.identity);
+                newStar.GetComponent<Rigidbody2D>().AddForce(transform.right * direction * specialForce);
             }
         }
     }
