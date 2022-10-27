@@ -106,7 +106,7 @@ public class Player : MonoBehaviour
                         playerAnimator.SetTrigger("upAttack");
                         endLag = 0.15f;
                         StartCoroutine(attackHitbox(0.066f, 2, 0.5f));
-                    } else if (Input.GetAxis("Vertical"+playerIndex)<0.5f) {
+                    } else if (Input.GetAxis("Vertical"+playerIndex)<-0.5f) {
                         Debug.Log("Down tilt");
                         playerAnimator.SetTrigger("downAttack");
                         endLag = 0.15f;
@@ -128,7 +128,7 @@ public class Player : MonoBehaviour
                         playerAnimator.SetTrigger("upAttack");
                         endLag = 0.25f;
                         StartCoroutine(attackHitbox(0.067f, 6, 1.25f));
-                    } else if (Input.GetAxis("Vertical"+playerIndex)<0.5f) {
+                    } else if (Input.GetAxis("Vertical"+playerIndex)<-0.5f) {
                         Debug.Log("Down Air");
                         endLag = 0.583f;
                         playerAnimator.SetTrigger("downAir");
@@ -204,8 +204,8 @@ public class Player : MonoBehaviour
     }
 
     void FixedUpdate() {
-        Debug.Log(Input.GetAxis("Horizontal"+playerIndex));
-        Debug.Log(Input.GetAxis("Vertical"+playerIndex));
+        //Debug.Log(Input.GetAxis("Horizontal"+playerIndex));
+        //Debug.Log(Input.GetAxis("Vertical"+playerIndex));
         xSpeed = Input.GetAxis("Horizontal"+playerIndex) * speed;
         if (iced == false && grounded == false) {
             rb.velocity = new Vector2(xSpeed, rb.velocity.y);
