@@ -22,15 +22,10 @@ public class Player : MonoBehaviour
     float xSpeed;
     float ySpeed;
 
-    // New Input System
-    /*
-    public PlayerControls controls;
-    private PlayerInput playerInput;
-    private InputAction jumpAction;
-    */
-
     // Combat
-    public float endLag;
+    [SerializeField]
+    private float endLag;
+    public float hitStun;
     public Transform[] hitboxes;
     public float[] hitboxSizes;
     public Vector2[] knockbacks;
@@ -38,9 +33,7 @@ public class Player : MonoBehaviour
     Vector2 kb;
     Vector2 cstick;
     float multiplier;
-    //int recovery = 1;
     int direction = 1;
-    //int airSideSpecial = 1;
     public float blastzoneX = 20f;
     public float blastzoneCeiling = 20f;
     public float blastzoneFloor = -10f;
@@ -48,6 +41,7 @@ public class Player : MonoBehaviour
     public float specialForce;
     public GameObject downAirProjectile;
     public float downAirForce;
+    public HealthSystem stocks;
 
     // Animation
     public Animator playerAnimator;
@@ -84,7 +78,7 @@ public class Player : MonoBehaviour
             //airSideSpecial = 1;
         }
         
-        if (endLag <= 0) {
+        if (endLag <= 0 && hitStun <= 0) {
             if (Input.GetButtonDown("Jump"+playerIndex)) {
                 if (grounded || iced) {
                     rb.AddForce(new Vector2(rb.velocity.x, jumpForce));
@@ -172,6 +166,7 @@ public class Player : MonoBehaviour
             if (nearby.tag == "Player") {
                 Rigidbody2D enemyRB = nearby.GetComponent<Rigidbody2D>();
                 HealthSystem enemyHealth = nearby.GetComponent<HealthSystem>();
+                Player hitPlayers = nearby.GetComponent<Player>();
                 if (enemyRB == rb) { // To prevent the player knocking themselves back
                     enemyRB = null;
                 }
@@ -180,9 +175,10 @@ public class Player : MonoBehaviour
                     Debug.Log("Hit");
                     kb = new Vector2(knockbacks[hbIndex].x * direction, knockbacks[hbIndex].y);
                     enemyRB.velocity = new Vector2(0, 0);
-                    multiplier = 1 + (enemyPercent * kbMulti / 50);
+                    multiplier = 1 + (enemyPercent * kbMulti / 5);
                     enemyHealth.Damage(moveDamages[hbIndex]);
                     enemyRB.AddForce(kb * multiplier);
+                    hitPlayers.hitStun = 0.2f * kbMulti;
                 }
             }
         }
@@ -192,6 +188,7 @@ public class Player : MonoBehaviour
         gameObject.SetActive(true);
         gameObject.transform.position = new Vector2(0, 5);
         gameObject.tag = "InvulnerablePlayer";
+        stocks.LoseOneHeart();
         Invoke("MakeVulnerable", 3f);
     }
 
@@ -204,8 +201,6 @@ public class Player : MonoBehaviour
     }
 
     void FixedUpdate() {
-        //Debug.Log(Input.GetAxis("Horizontal"+playerIndex));
-        //Debug.Log(Input.GetAxis("Vertical"+playerIndex));
         xSpeed = Input.GetAxis("Horizontal"+playerIndex) * speed;
         if (iced == false && grounded == false) {
             rb.velocity = new Vector2(xSpeed, rb.velocity.y);
@@ -251,12 +246,16 @@ public class Player : MonoBehaviour
         playerAnimator.SetFloat("Speed", rb.velocity.x * direction);
         playerAnimator.SetBool("isGrounded", grounded);
         playerAnimator.SetBool("doubleJump", didDoubleJump);
+        playerAnimator.SetFloat("hitStun", hitStun);
     }
 
     void LateUpdate()
     {
         if (endLag > 0) {
             endLag -= Time.deltaTime;
+        }
+        if (hitStun > 0) {
+            hitStun -= Time.deltaTime;
         }
     }
 

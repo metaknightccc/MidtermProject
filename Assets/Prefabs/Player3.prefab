@@ -179,13 +179,13 @@ MonoBehaviour:
   - 0.1
   - 0.1
   knockbacks:
-  - {x: 50, y: 50}
-  - {x: 10, y: 50}
-  - {x: 0, y: 125}
-  - {x: 100, y: 50}
-  - {x: 50, y: 50}
-  - {x: 80, y: 50}
-  - {x: 0, y: 125}
+  - {x: 50, y: 5}
+  - {x: 10, y: 5}
+  - {x: 0, y: 12.5}
+  - {x: 100, y: 5}
+  - {x: 50, y: 5}
+  - {x: 80, y: 505}
+  - {x: 0, y: 12.5}
   - {x: 0, y: 0}
   - {x: 0, y: 0}
   moveDamages:
@@ -205,6 +205,7 @@ MonoBehaviour:
   specialForce: 500
   downAirProjectile: {fileID: 3954960569168820556, guid: c45fd78026a1248a99b24e4b914f73db, type: 3}
   downAirForce: 500
+  stocks: {fileID: 7546627624550883952}
   playerAnimator: {fileID: 5466913120671729682}
   playerIndex: 0
 --- !u!58 &1468537738287929958
