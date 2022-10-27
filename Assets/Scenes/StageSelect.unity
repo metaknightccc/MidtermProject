@@ -868,7 +868,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2081943617}
         m_TargetAssemblyTypeName: StageSelect, Assembly-CSharp
-        m_MethodName: Forest
+        m_MethodName: Ice
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1281,7 +1281,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2081943617}
         m_TargetAssemblyTypeName: StageSelect, Assembly-CSharp
-        m_MethodName: Forest
+        m_MethodName: Lava
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1550,7 +1550,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2081943617}
         m_TargetAssemblyTypeName: StageSelect, Assembly-CSharp
-        m_MethodName: Forest
+        m_MethodName: PokemonStadium
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

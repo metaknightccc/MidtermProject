@@ -6,9 +6,17 @@ using UnityEngine.SceneManagement;
 public class StageSelect : MonoBehaviour
 {
     public void PokemonStadium() {
-        SceneManager.LoadScene("Test");
+        SceneManager.LoadScene("Stage1");
     }
     public void Forest() {
+        SceneManager.LoadScene("Stage3");
+    }
+
+    public void Lava() {
+        SceneManager.LoadScene("Stage4");
+    }
+
+    public void Ice() {
         SceneManager.LoadScene("Stage3");
     }
 }
