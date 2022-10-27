@@ -19,12 +19,15 @@ public class Player : MonoBehaviour
     public int extraJumps = 1;
     public int extraJump = 5; //changes per character
     public float radius = 0.3f;
+    float xSpeed;
+    float ySpeed;
 
     // New Input System
+    /*
     public PlayerControls controls;
     private PlayerInput playerInput;
     private InputAction jumpAction;
-    Vector2 move;
+    */
 
     // Combat
     public float endLag;
@@ -53,27 +56,6 @@ public class Player : MonoBehaviour
 
     public int playerIndex;
 
-    /*
-    private void Awake() {
-        controls = new PlayerControls();
-    }
-
-    private void OnEnable() {
-        controls.Enable();
-    }
-
-    private void OnDisable() {
-        controls.Disable();
-    }
-    */
-
-    /*
-    private void Awake() {
-        playerInput = GetComponent<PlayerInput>();
-        jumpAction = playerInput.actions["Jump"];
-    }
-    */
-
     // Start is called before the first frame update
     void Start()
     {
@@ -83,7 +65,7 @@ public class Player : MonoBehaviour
             blastzoneCeiling = 10f;
             blastzoneFloor = -10f;
         }
-        if (SceneManager.GetActiveScene().name == "Test"){
+        if (SceneManager.GetActiveScene().name == "Stage1"){
             blastzoneX = 20f;
             blastzoneCeiling = 10f;
             blastzoneFloor = -8f;
@@ -93,8 +75,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        move = controls.Player.Move.ReadValue<Vector2>();
-        cstick = controls.Player.RightStickNormal.ReadValue<Vector2>();
         grounded = Physics2D.OverlapCircle(feet.position, radius, groundLayer);
         iced = Physics2D.OverlapCircle(feet.position, radius, iceLayer);
 
@@ -105,8 +85,7 @@ public class Player : MonoBehaviour
         }
         
         if (endLag <= 0) {
-            //controls.Player.Jump.ReadValue<float>();
-            if (controls.Player.Jump.triggered) {
+            if (Input.GetButtonDown("Jump"+playerIndex)) {
                 if (grounded || iced) {
                     rb.AddForce(new Vector2(rb.velocity.x, jumpForce));
                 } else {
@@ -119,20 +98,20 @@ public class Player : MonoBehaviour
                     }
                 }
             }
-
-            if(controls.Player.NormalAttack.triggered) {
+            
+            if(Input.GetButtonDown("Attack"+playerIndex)) {
                 if (grounded || iced) { // Grounded attacks
-                    if (move.y > .5) {
+                    if (Input.GetAxis("Vertical"+playerIndex)>0.5f) {
                         Debug.Log("Up tilt");
                         playerAnimator.SetTrigger("upAttack");
                         endLag = 0.15f;
                         StartCoroutine(attackHitbox(0.066f, 2, 0.5f));
-                    } else if (move.y < -.5) {
+                    } else if (Input.GetAxis("Vertical"+playerIndex)<-0.5f) {
                         Debug.Log("Down tilt");
                         playerAnimator.SetTrigger("downAttack");
                         endLag = 0.15f;
                         StartCoroutine(attackHitbox(0.066f, 1, 0));
-                    } else if (move.x > .2 || move.x < -.2) {
+                    } else if (Input.GetAxis("Horizontal"+playerIndex)>0.2f || Input.GetAxis("Horizontal"+playerIndex)<-0.2f) {
                         Debug.Log("Side tilt");
                         playerAnimator.SetTrigger("sideAttack");
                         endLag = 0.15f;
@@ -141,32 +120,27 @@ public class Player : MonoBehaviour
                         endLag = 0.15f;
                         Debug.Log("Jab");
                         playerAnimator.SetTrigger("neutralAttack");
-                        // The following program is exclusive to this character's jab only
-                        //gameObject.tag = "InvulnerablePlayer";
-                        //rb.AddForce(new Vector2(100 * direction, 0));
-                        //Invoke("MakeVulnerable", 0.2f);
-                        // The above 3 lines is inspired by electric wind god fist
                         StartCoroutine(attackHitbox(0.033f, 0, 0.5f));
                     }
                 } else { // Aerial attacks
-                    if (move.y > .5) {
+                    if (Input.GetAxis("Vertical"+playerIndex)>0.5f) {
                         Debug.Log("Up Air");
                         playerAnimator.SetTrigger("upAttack");
                         endLag = 0.25f;
                         StartCoroutine(attackHitbox(0.067f, 6, 1.25f));
-                    } else if (move.y < -.5) {
+                    } else if (Input.GetAxis("Vertical"+playerIndex)<-0.5f) {
                         Debug.Log("Down Air");
                         endLag = 0.583f;
                         playerAnimator.SetTrigger("downAir");
                         GameObject newMelon = Instantiate(downAirProjectile, hitboxes[7].position, Quaternion.identity);
                         newMelon.GetComponent<Rigidbody2D>().AddForce(transform.up * -1 * downAirForce);
                         // Add hitboxes onto this
-                    } else if (move.x * direction > 0.2) {
+                    } else if (Input.GetAxis("Horizontal"+playerIndex) * direction > 0.2f) {
                         Debug.Log("Forward Air");
                         playerAnimator.SetTrigger("sideAttack");
                         endLag = 0.25f;
                         StartCoroutine(attackHitbox(0.083f, 5, 1.25f));
-                    } else if (move.x * direction < -0.2) {
+                    } else if (Input.GetAxis("Horizontal"+playerIndex) * direction < -0.2f) {
                         direction *= -1;
                         Debug.Log("Back Air");
                         playerAnimator.SetTrigger("sideAttack");
@@ -180,64 +154,7 @@ public class Player : MonoBehaviour
                         StartCoroutine(attackHitbox(0.033f, 4, 1.25f));
                     }
                 }
-            } else if (controls.Player.RightStickNormal.triggered) {
-                // Control stick alternatively inputting moves
-                // Cannot input neutral attacks (jab, neutral air)
-                // since there is no neutral value for sticks
-                if (grounded || iced) { // Grounded attacks
-                    rb.velocity = new Vector2(0, rb.velocity.y);
-                    if (cstick.y > .5) { // Up tilt
-                        endLag = 0.15f;
-                        Debug.Log("Up tilt");
-                        playerAnimator.SetTrigger("upAttack");
-                        StartCoroutine(attackHitbox(0.067f, 2, 0.5f));
-                    } else if (cstick.y < -.5) { // Down tilt
-                        endLag = 0.15f;
-                        Debug.Log("Down tilt");
-                        playerAnimator.SetTrigger("downAttack");
-                        StartCoroutine(attackHitbox(0.067f, 1, 0));
-                    } else if (cstick.x > 0.5) { // Side tilt facing right
-                        gameObject.transform.localScale = new Vector3(1,1,1);
-                        direction = 1;
-                        endLag = 0.15f;
-                        Debug.Log("Side tilt right");
-                        playerAnimator.SetTrigger("sideAttack");
-                        StartCoroutine(attackHitbox(0.083f, 3, 0.75f));
-                    } else if (cstick.x < -0.5){ // Side stick facing left
-                        gameObject.transform.localScale = new Vector3(-1,1,1);
-                        direction = -1;
-                        endLag = 0.15f;
-                        playerAnimator.SetTrigger("sideAttack");
-                        Debug.Log("Side tilt left");
-                        StartCoroutine(attackHitbox(0.083f, 3, 0.75f));
-                    }
-                } else { // Aerial attacks
-                    if (cstick.y > .5) { // Up Air
-                        Debug.Log("Up Air");
-                        playerAnimator.SetTrigger("upAttack");
-                        endLag = 0.25f;
-                        StartCoroutine(attackHitbox(0.067f, 6, 1.25f));
-                    } else if (cstick.y < -.5) { // Down Air
-                        Debug.Log("Down Air");
-                        endLag = 0.583f;
-                        playerAnimator.SetTrigger("downAir");
-                        GameObject newMelon = Instantiate(downAirProjectile, hitboxes[7].position, Quaternion.identity);
-                        newMelon.GetComponent<Rigidbody2D>().AddForce(transform.up * -1 * downAirForce);
-                    } else if (cstick.x * direction > 0.5) { // Forward Air
-                        Debug.Log("Forward Air");
-                        playerAnimator.SetTrigger("sideAttack");
-                        endLag = 0.25f;
-                        StartCoroutine(attackHitbox(0.083f, 5, 1.25f));
-                    } else if (cstick.x * direction < -0.5) { // Back Air
-                        direction *= -1;
-                        Debug.Log("Back Air");
-                        playerAnimator.SetTrigger("sideAttack");
-                        gameObject.transform.localScale = new Vector3(direction,1,1);
-                        endLag = 0.25f;
-                        StartCoroutine(attackHitbox(0.083f, 5, 1.25f));
-                    }
-                } 
-            } else if (controls.Player.SpecialAttack.triggered) {
+            } else if (Input.GetButtonDown("Special"+playerIndex)) {
                 Debug.Log("Neutral Special");
                 endLag = 0.3f;
                 playerAnimator.SetTrigger("special");
@@ -271,39 +188,30 @@ public class Player : MonoBehaviour
         }
     }
 
-
     void Respawn() {
-        // Lose a stock
-        // Percent = 0
         gameObject.SetActive(true);
         gameObject.transform.position = new Vector2(0, 5);
         gameObject.tag = "InvulnerablePlayer";
         Invoke("MakeVulnerable", 3f);
     }
 
-
     void MakeVulnerable() {
         gameObject.tag = "Player";
     }
-
     
     void setFalse() {
         didDoubleJump = false;
     }
 
-
-    void unfreezeY() {
-        rb.constraints &= ~RigidbodyConstraints2D.FreezePositionY;
-    }
-
-
     void FixedUpdate() {
+        //Debug.Log(Input.GetAxis("Horizontal"+playerIndex));
+        //Debug.Log(Input.GetAxis("Vertical"+playerIndex));
+        xSpeed = Input.GetAxis("Horizontal"+playerIndex) * speed;
         if (iced == false && grounded == false) {
-            rb.velocity = new Vector2(move.x * speed, rb.velocity.y);
-            //rb.velocity = new Vector2(inputVector.x * speed * Time.deltaTime, rb.velocity.y);
+            rb.velocity = new Vector2(xSpeed, rb.velocity.y);
         }        
         if (endLag <= 0 && iced == true) {
-            float x = rb.velocity.x + (move.x * (speed/60));
+            float x = rb.velocity.x + (xSpeed/60);
             if(x > 6)
             {
                 x = 6;
@@ -316,15 +224,14 @@ public class Player : MonoBehaviour
             
         }
         if (endLag <= 0 && grounded == true) {
-            rb.velocity = new Vector2(move.x * speed, rb.velocity.y);
-            //rb.velocity = new Vector2(inputVector.x * speed * Time.deltaTime, rb.velocity.y);
+            rb.velocity = new Vector2(xSpeed, rb.velocity.y);
         }
-        if (move.x < -0.2 && (grounded || iced)) { //facing left on ground
+        if (Input.GetAxis("Horizontal"+playerIndex)< -0.2 && (grounded || iced)) { //facing left on ground
         
             gameObject.transform.localScale = new Vector3(-1,1,1);
             direction = -1;
         }
-        if (move.x > 0.2 && (grounded || iced)) { //facing right on ground
+        if (Input.GetAxis("Horizontal"+playerIndex) > 0.2 && (grounded || iced)) { //facing right on ground
             gameObject.transform.localScale = new Vector3(1,1,1);
             direction = 1;
         }
@@ -346,7 +253,6 @@ public class Player : MonoBehaviour
         playerAnimator.SetBool("doubleJump", didDoubleJump);
     }
 
-
     void LateUpdate()
     {
         if (endLag > 0) {
@@ -354,29 +260,10 @@ public class Player : MonoBehaviour
         }
     }
 
-
     void OnDrawGizmosSelected()
     {
         for (int i = 0; i < 4; i++) {
             Gizmos.DrawWireSphere(hitboxes[i].position, hitboxSizes[i]);
         }
     }
-
-    /*
-    public void Move() {
-
-    }
-
-    public void Jump() {
-
-    }
-
-    public void NormalAttack() {
-
-    }
-
-    public void SpecialAttack() {
-
-    }
-    */
 }
