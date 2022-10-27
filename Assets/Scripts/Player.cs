@@ -244,7 +244,7 @@ public class Player : MonoBehaviour
         }
 
         playerAnimator.SetFloat("Speed", rb.velocity.x * direction);
-        playerAnimator.SetBool("isGrounded", grounded);
+        playerAnimator.SetBool("isGrounded", grounded || iced);
         playerAnimator.SetBool("doubleJump", didDoubleJump);
         playerAnimator.SetFloat("hitStun", hitStun);
     }
