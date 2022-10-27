@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -21,7 +21,9 @@ public class Player : MonoBehaviour
     public float radius = 0.3f;
 
     // New Input System
-    private PlayerControls controls;
+    public PlayerControls controls;
+    private PlayerInput playerInput;
+    private InputAction jumpAction;
     Vector2 move;
 
     // Combat
@@ -47,7 +49,11 @@ public class Player : MonoBehaviour
     // Animation
     public Animator playerAnimator;
     bool didDoubleJump;
+    Vector2 inputVector;
 
+    public int playerIndex;
+
+    /*
     private void Awake() {
         controls = new PlayerControls();
     }
@@ -59,6 +65,14 @@ public class Player : MonoBehaviour
     private void OnDisable() {
         controls.Disable();
     }
+    */
+
+    /*
+    private void Awake() {
+        playerInput = GetComponent<PlayerInput>();
+        jumpAction = playerInput.actions["Jump"];
+    }
+    */
 
     // Start is called before the first frame update
     void Start()
@@ -81,16 +95,16 @@ public class Player : MonoBehaviour
     {
         move = controls.Player.Move.ReadValue<Vector2>();
         cstick = controls.Player.RightStickNormal.ReadValue<Vector2>();
+        grounded = Physics2D.OverlapCircle(feet.position, radius, groundLayer);
+        iced = Physics2D.OverlapCircle(feet.position, radius, iceLayer);
 
         if (grounded || iced) {
             extraJumps = extraJump; 
             //recovery = 1;
             //airSideSpecial = 1;
         }
-
+        
         if (endLag <= 0) {
-            grounded = Physics2D.OverlapCircle(feet.position, radius, groundLayer);
-            iced = Physics2D.OverlapCircle(feet.position, radius, iceLayer);
             //controls.Player.Jump.ReadValue<float>();
             if (controls.Player.Jump.triggered) {
                 if (grounded || iced) {
@@ -224,44 +238,6 @@ public class Player : MonoBehaviour
                     }
                 } 
             } else if (controls.Player.SpecialAttack.triggered) {
-                /*
-                if (move.y > .5 && recovery > 0) { // up special
-                    Debug.Log("Up Special");
-                    endLag = 1.1f;
-                    rb.velocity = new Vector2(0, 10);
-                    recovery -= 1; //so you can't spam up specials without landing
-                } else if (move.y < -.5) { // down special
-                    Debug.Log("Down Special");
-                    endLag = 0.67f;
-                    gameObject.tag = "InvulnerablePlayer";
-                    Invoke("MakeVulnerable", 0.1f);
-                    StartCoroutine(attackHitbox(0.217f, 12));
-                } else if (move.x > .2 && airSideSpecial > 0){ // side special facing right
-                    gameObject.transform.localScale = new Vector3(1,1,1);
-                    direction = 1;
-                    Debug.Log("Side Special right");
-                    endLag = 0.9f;
-                    rb.constraints = RigidbodyConstraints2D.FreezePositionY;
-                    rb.velocity = new Vector2(6.67f * direction, 0);
-                    Invoke("unfreezeY", endLag-0.1f);
-                    airSideSpecial -= 1;
-                    //Add hitboxes
-                } else if (move.x < -.2 & airSideSpecial > 0){ // side special facing left
-                    gameObject.transform.localScale = new Vector3(-1,1,1);
-                    direction = -1;
-                    Debug.Log("Side Special left");
-                    endLag = 0.9f;
-                    rb.constraints = RigidbodyConstraints2D.FreezePositionY;
-                    rb.velocity = new Vector2(6.67f * direction, 0);
-                    Invoke("unfreezeY", endLag-0.1f);
-                    airSideSpecial -= 1;
-                    //Add hitboxes
-                } else { // neutral special
-                    Debug.Log("Neutral Special");
-                    endLag = 0.78f;
-                    StartCoroutine(attackHitbox(0.33f, 9));
-                }
-                */
                 Debug.Log("Neutral Special");
                 endLag = 0.3f;
                 playerAnimator.SetTrigger("special");
@@ -324,6 +300,7 @@ public class Player : MonoBehaviour
     void FixedUpdate() {
         if (iced == false && grounded == false) {
             rb.velocity = new Vector2(move.x * speed, rb.velocity.y);
+            //rb.velocity = new Vector2(inputVector.x * speed * Time.deltaTime, rb.velocity.y);
         }        
         if (endLag <= 0 && iced == true) {
             float x = rb.velocity.x + (move.x * (speed/60));
@@ -340,6 +317,7 @@ public class Player : MonoBehaviour
         }
         if (endLag <= 0 && grounded == true) {
             rb.velocity = new Vector2(move.x * speed, rb.velocity.y);
+            //rb.velocity = new Vector2(inputVector.x * speed * Time.deltaTime, rb.velocity.y);
         }
         if (move.x < -0.2 && (grounded || iced)) { //facing left on ground
         
@@ -383,4 +361,22 @@ public class Player : MonoBehaviour
             Gizmos.DrawWireSphere(hitboxes[i].position, hitboxSizes[i]);
         }
     }
+
+    /*
+    public void Move() {
+
+    }
+
+    public void Jump() {
+
+    }
+
+    public void NormalAttack() {
+
+    }
+
+    public void SpecialAttack() {
+
+    }
+    */
 }
