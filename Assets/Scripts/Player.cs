@@ -104,7 +104,7 @@ public class Player : MonoBehaviour
                         Debug.Log("Down tilt");
                         playerAnimator.SetTrigger("downAttack");
                         endLag = 0.15f;
-                        StartCoroutine(attackHitbox(0.066f, 1, 0));
+                        StartCoroutine(attackHitbox(0.066f, 1, 0.5f));
                     } else if (Input.GetAxis("Horizontal"+playerIndex)>0.2f || Input.GetAxis("Horizontal"+playerIndex)<-0.2f) {
                         Debug.Log("Side tilt");
                         playerAnimator.SetTrigger("sideAttack");
@@ -174,8 +174,8 @@ public class Player : MonoBehaviour
                     float enemyPercent = nearby.GetComponent<HealthSystem>().rate;
                     Debug.Log("Hit");
                     kb = new Vector2(knockbacks[hbIndex].x * direction, knockbacks[hbIndex].y);
-                    enemyRB.velocity = new Vector2(0, 0);
-                    multiplier = 1 + (enemyPercent * kbMulti / 5);
+                    //enemyRB.velocity = new Vector2(0, 0);
+                    multiplier = 1f + (enemyPercent * kbMulti / 5f);
                     enemyHealth.Damage(moveDamages[hbIndex]);
                     enemyRB.AddForce(kb * multiplier);
                     hitPlayers.hitStun = 0.2f * kbMulti;
@@ -202,10 +202,10 @@ public class Player : MonoBehaviour
 
     void FixedUpdate() {
         xSpeed = Input.GetAxis("Horizontal"+playerIndex) * speed;
-        if (iced == false && grounded == false) {
+        if (iced == false && grounded == false && hitStun <= 0) {
             rb.velocity = new Vector2(xSpeed, rb.velocity.y);
-        }        
-        if (endLag <= 0 && iced == true) {
+        } 
+        if (endLag <= 0 && iced == true && hitStun <= 0) {
             float x = rb.velocity.x + (xSpeed/60);
             if(x > 6)
             {
@@ -218,7 +218,7 @@ public class Player : MonoBehaviour
             rb.velocity = new Vector2(x, rb.velocity.y);
             
         }
-        if (endLag <= 0 && grounded == true) {
+        if (endLag <= 0 && grounded == true && hitStun <= 0) {
             rb.velocity = new Vector2(xSpeed, rb.velocity.y);
         }
         if (Input.GetAxis("Horizontal"+playerIndex)< -0.2 && (grounded || iced)) { //facing left on ground
