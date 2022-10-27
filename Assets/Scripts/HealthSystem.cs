@@ -14,6 +14,7 @@ public class HealthSystem : MonoBehaviour
     private int life;
     private bool isDead;
     public float rate=0f;
+    public ManageGame gameManager;
 
     private void Start()
     {
@@ -26,7 +27,7 @@ public class HealthSystem : MonoBehaviour
         if (isDead == true)
         {
             Debug.Log("Dead");
-            SceneManager.LoadScene("StageSelect"); // change to win page
+            //SceneManager.LoadScene("StageSelect"); // change to win page
         }
     }
 
