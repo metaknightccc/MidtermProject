@@ -3681,6 +3681,10 @@ PrefabInstance:
       value: Player1
       objectReference: {fileID: 0}
     - target: {fileID: 8930460924098412265, guid: b4e83c7cab84d7c4083e50358b6cb501, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8930460924098412265, guid: b4e83c7cab84d7c4083e50358b6cb501, type: 3}
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
@@ -7658,7 +7662,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1252176559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7677,6 +7681,7 @@ MonoBehaviour:
   - {fileID: 1799269552}
   - {fileID: 1087737858}
   rate: 0
+  gameManager: {fileID: 0}
 --- !u!114 &1252176560
 MonoBehaviour:
   m_ObjectHideFlags: 0
