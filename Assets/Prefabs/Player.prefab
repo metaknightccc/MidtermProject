@@ -237,6 +237,7 @@ MonoBehaviour:
   downAirProjectile: {fileID: 3954960569168820556, guid: c45fd78026a1248a99b24e4b914f73db, type: 3}
   downAirForce: 0
   playerAnimator: {fileID: -815733830384833281}
+  playerIndex: 0
 --- !u!95 &-815733830384833281
 Animator:
   serializedVersion: 4
