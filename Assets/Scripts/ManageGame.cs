@@ -14,9 +14,11 @@ public class ManageGame : MonoBehaviour
             for(int i = 0; i < players.Length; i++) {
                 if (players[i].life > 0) {
                     Debug.Log("Player "+(i+1)+" is the winner");
+                    PlayerPrefs.SetInt("winner",i+1);
+                    break;
                 }
             }
-            SceneManager.LoadScene("StageSelect"); // change to win page
+            SceneManager.LoadScene("Victory", LoadSceneMode.Single);
         }
     }
 }

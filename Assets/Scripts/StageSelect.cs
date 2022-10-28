@@ -17,6 +17,6 @@ public class StageSelect : MonoBehaviour
     }
 
     public void Ice() {
-        SceneManager.LoadScene("Stage3");
+        SceneManager.LoadScene("Stage2");
     }
 }

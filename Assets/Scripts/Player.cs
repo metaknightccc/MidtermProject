@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
     public float downAirForce;
     public HealthSystem stocks;
     public ManageGame gameManager;
+    public Vector2 respawnPoint = new Vector2(0, 5);
 
     // Animation
     public Animator playerAnimator;
@@ -55,15 +56,25 @@ public class Player : MonoBehaviour
     void Start()
     {
         //Sets the blastzones
+        if (SceneManager.GetActiveScene().name == "Stage1"){
+            blastzoneX = 20f;
+            blastzoneCeiling = 10f;
+            blastzoneFloor = -8f;
+        }
+        if (SceneManager.GetActiveScene().name == "Stage2"){
+            blastzoneX = 20f;
+            blastzoneCeiling = 20f;
+            blastzoneFloor = -10f;
+        }
         if (SceneManager.GetActiveScene().name == "Stage3"){
             blastzoneX = 35f;
             blastzoneCeiling = 10f;
             blastzoneFloor = -10f;
         }
-        if (SceneManager.GetActiveScene().name == "Stage1"){
-            blastzoneX = 20f;
-            blastzoneCeiling = 10f;
-            blastzoneFloor = -8f;
+        if (SceneManager.GetActiveScene().name == "Stage4"){
+            blastzoneX = 16f;
+            blastzoneCeiling = 25f;
+            blastzoneFloor = -20f;
         }
     }
 
@@ -187,7 +198,7 @@ public class Player : MonoBehaviour
 
     void Respawn() {
         stocks.LoseOneHeart();
-        gameObject.transform.position = new Vector2(0, 5);
+        gameObject.transform.position = respawnPoint;
         if (stocks.life > 0){
             gameObject.SetActive(true);
             gameObject.tag = "InvulnerablePlayer";
