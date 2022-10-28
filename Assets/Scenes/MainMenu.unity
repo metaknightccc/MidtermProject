@@ -2628,7 +2628,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4, y: -180}
+  m_AnchoredPosition: {x: 4, y: -240}
   m_SizeDelta: {x: 300, y: 63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1144804168
@@ -2849,7 +2849,9 @@ MonoBehaviour:
   m_text: "P1: WASD to move, space to jump, c to normal attack attack, x to special
     \n\nP2: arrow keys to move, ' to jump, / to normal attack, right shift to special\n\nP3:
     TFGH to move, 4 to jump, n to normal attack, m to special\r\n\r\nP4: IJKL to
-    move, 0 to jump, ,(comma) to normal attack, . to special\n"
+    move, 0 to jump, ,(comma) to normal attack, . to special\n\nALL Players (Joystick):
+    Right stick to move, Joystick Button 0/3 to Jump, Joystick Button 2 to normal
+    attack, Joystick button 1 to special\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f284e04744a80842bd44d8902c2d720, type: 2}
   m_sharedMaterial: {fileID: 1001518403231847858, guid: 8f284e04744a80842bd44d8902c2d720, type: 2}
