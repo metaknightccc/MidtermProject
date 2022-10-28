@@ -7,7 +7,18 @@ public class ManageGame : MonoBehaviour
 {
     //Do this tomorrow
     public HealthSystem[] players;
+    //public GameObject[] playerObjects;
     public int deadCount = 0;
+
+    /*
+    void Start() {
+        int playerCount = PlayerPrefs.GetInt("PlayerNumber");
+        if (playerCount == 2) {
+            playerObjects[2].enabled == false;
+            playerObjects[3].enabled == false;
+        }
+    }
+    */
 
     void Update() {
         if (deadCount == 3) {
