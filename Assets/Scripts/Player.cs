@@ -68,7 +68,7 @@ public class Player : MonoBehaviour
         }
         if (SceneManager.GetActiveScene().name == "Stage3"){
             blastzoneX = 35f;
-            blastzoneCeiling = 10f;
+            blastzoneCeiling = 40f;
             blastzoneFloor = -10f;
         }
         if (SceneManager.GetActiveScene().name == "Stage4"){
