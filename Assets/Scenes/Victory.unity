@@ -548,10 +548,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefabs:
-  - {fileID: 3472625376652563800, guid: 10b2a156c4fed47219ec116a47091662, type: 3}
-  - {fileID: 3472625376652563800, guid: e58b813b714da46918e709edb1a6d60c, type: 3}
-  - {fileID: 3472625376652563800, guid: 585f44723b85b45149f351353755fc6f, type: 3}
-  - {fileID: 3472625376652563800, guid: 63c724cce4d724ca581160ffd5780d5d, type: 3}
+  - {fileID: 3472625376652563800, guid: 947e8ba920d1b480ca13fdc01ec99b7d, type: 3}
+  - {fileID: 3472625376652563800, guid: c4f29c1f68bf44ebbad0632e4bee0e87, type: 3}
+  - {fileID: 3472625376652563800, guid: 76aa55925f4ad4a0e96487d889e7f6e1, type: 3}
+  - {fileID: 3472625376652563800, guid: 7c34d14726daf41a682a5e12ecc937ba, type: 3}
   spawnPoint: {x: 0, y: 5}
   label: {fileID: 1690015755}
 --- !u!1 &1690015753
