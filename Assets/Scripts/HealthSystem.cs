@@ -11,7 +11,7 @@ public class HealthSystem : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI rateText;
     [SerializeField] private GameObject[] hearts;
-    private int life;
+    public int life;
     private bool isDead;
     public float rate=0f;
     public ManageGame gameManager;

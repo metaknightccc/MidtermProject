@@ -42,6 +42,7 @@ public class Player : MonoBehaviour
     public GameObject downAirProjectile;
     public float downAirForce;
     public HealthSystem stocks;
+    public ManageGame gameManager;
 
     // Animation
     public Animator playerAnimator;
@@ -178,18 +179,22 @@ public class Player : MonoBehaviour
                     multiplier = 1f + (enemyPercent * kbMulti / 5f);
                     enemyHealth.Damage(moveDamages[hbIndex]);
                     enemyRB.AddForce(kb * multiplier);
-                    hitPlayers.hitStun = 0.2f * kbMulti;
+                    hitPlayers.hitStun = 0.4f * kbMulti;
                 }
             }
         }
     }
 
     void Respawn() {
-        gameObject.SetActive(true);
-        gameObject.transform.position = new Vector2(0, 5);
-        gameObject.tag = "InvulnerablePlayer";
         stocks.LoseOneHeart();
-        Invoke("MakeVulnerable", 3f);
+        gameObject.transform.position = new Vector2(0, 5);
+        if (stocks.life > 0){
+            gameObject.SetActive(true);
+            gameObject.tag = "InvulnerablePlayer";
+            Invoke("MakeVulnerable", 3f);
+        } else {
+            gameManager.deadCount += 1;
+        }
     }
 
     void MakeVulnerable() {

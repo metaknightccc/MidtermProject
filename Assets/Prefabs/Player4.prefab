@@ -158,6 +158,7 @@ MonoBehaviour:
   extraJump: 5
   radius: 0.3
   endLag: 0
+  hitStun: 0
   hitboxes:
   - {fileID: 8278127607805452002}
   - {fileID: 8278127607644250234}
@@ -179,13 +180,13 @@ MonoBehaviour:
   - 0.1
   - 0.1
   knockbacks:
-  - {x: 50, y: 5}
-  - {x: 10, y: 5}
-  - {x: 0, y: 12.5}
-  - {x: 100, y: 5}
-  - {x: 50, y: 5}
-  - {x: 80, y: 5}
-  - {x: 0, y: 12.5}
+  - {x: 25, y: 5}
+  - {x: 5, y: 5}
+  - {x: 0, y: 10}
+  - {x: 40, y: 5}
+  - {x: 25, y: 5}
+  - {x: 30, y: 5}
+  - {x: 0, y: 10}
   - {x: 0, y: 0}
   - {x: 0, y: 0}
   moveDamages:
@@ -206,6 +207,7 @@ MonoBehaviour:
   downAirProjectile: {fileID: 3954960569168820556, guid: c45fd78026a1248a99b24e4b914f73db, type: 3}
   downAirForce: 500
   stocks: {fileID: 7546627624550883952}
+  gameManager: {fileID: 0}
   playerAnimator: {fileID: 5466913120671729682}
   playerIndex: 4
 --- !u!58 &1468537738287929958
@@ -241,7 +243,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  life: 0
   rate: 0
+  gameManager: {fileID: 0}
 --- !u!95 &5466913120671729682
 Animator:
   serializedVersion: 4
@@ -310,7 +314,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3522822459045825642, guid: 5d5ef13bb52bb4c6a8acf8763c1dd007, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.5
+      value: -1.25
       objectReference: {fileID: 0}
     - target: {fileID: 3522822459078044420, guid: 5d5ef13bb52bb4c6a8acf8763c1dd007, type: 3}
       propertyPath: m_LocalPosition.x

@@ -37,6 +37,7 @@ public class LifeSpan : MonoBehaviour
             other.GetComponent<Rigidbody2D>().AddForce(new Vector2(transform.localScale.x, 0) * knockbackX * direction);
             other.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, transform.localScale.y) * knockbackY);
             other.GetComponent<HealthSystem>().Damage(damage);
+            other.GetComponent<Player>().hitStun = 0.4f * multiplier;
         }
         Destroy(gameObject);
     }

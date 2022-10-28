@@ -152,7 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisObject: {fileID: 4729513665165884562}
   lifeTime: 1
-  multiplier: 0.5
+  multiplier: 1
   baseKnockbackX: 0
   baseKnockbackY: -100
-  damage: 13
+  damage: 10
