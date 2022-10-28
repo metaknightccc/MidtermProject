@@ -21,9 +21,8 @@ public class Spawner : MonoBehaviour
         GameObject b = Instantiate(projectile, transform.position, transform.rotation);
     }
     IEnumerator Spawn(){
-        SpawnProjectile();
-
         yield return new WaitForSeconds(Random.Range(5,30));
+        SpawnProjectile();
         Awake();
     }
 }

@@ -6,6 +6,15 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+
+    //sfx
+    public AudioClip fforward; //
+    public AudioClip sspecial;
+    public AudioClip jjump; //
+    public AudioClip jjab; //
+    public AudioClip ddown; //
+    public AudioClip uup; //
+    public AudioSource audioSource;
     // Movement
     public float speed = 5;
     public Rigidbody2D rb;
@@ -92,6 +101,7 @@ public class Player : MonoBehaviour
         
         if (endLag <= 0 && hitStun <= 0) {
             if (Input.GetButtonDown("Jump"+playerIndex)) {
+                GetComponent<AudioSource>().PlayOneShot(jjump);
                 if (grounded || iced) {
                     rb.AddForce(new Vector2(rb.velocity.x, jumpForce));
                 } else {
@@ -109,33 +119,39 @@ public class Player : MonoBehaviour
                 if (grounded || iced) { // Grounded attacks
                     if (Input.GetAxis("Vertical"+playerIndex)>0.5f) {
                         Debug.Log("Up tilt");
+                        GetComponent<AudioSource>().PlayOneShot(uup);
                         playerAnimator.SetTrigger("upAttack");
                         endLag = 0.15f;
                         StartCoroutine(attackHitbox(0.066f, 2, 0.5f));
                     } else if (Input.GetAxis("Vertical"+playerIndex)<-0.5f) {
                         Debug.Log("Down tilt");
+                        GetComponent<AudioSource>().PlayOneShot(ddown);
                         playerAnimator.SetTrigger("downAttack");
                         endLag = 0.15f;
                         StartCoroutine(attackHitbox(0.066f, 1, 0.5f));
                     } else if (Input.GetAxis("Horizontal"+playerIndex)>0.2f || Input.GetAxis("Horizontal"+playerIndex)<-0.2f) {
                         Debug.Log("Side tilt");
+                        GetComponent<AudioSource>().PlayOneShot(fforward);
                         playerAnimator.SetTrigger("sideAttack");
                         endLag = 0.15f;
                         StartCoroutine(attackHitbox(0.083f, 3, 0.75f));
                     } else {
                         endLag = 0.15f;
                         Debug.Log("Jab");
+                        GetComponent<AudioSource>().PlayOneShot(jjab);
                         playerAnimator.SetTrigger("neutralAttack");
                         StartCoroutine(attackHitbox(0.033f, 0, 0.5f));
                     }
                 } else { // Aerial attacks
                     if (Input.GetAxis("Vertical"+playerIndex)>0.5f) {
                         Debug.Log("Up Air");
+                        GetComponent<AudioSource>().PlayOneShot(uup);
                         playerAnimator.SetTrigger("upAttack");
                         endLag = 0.25f;
                         StartCoroutine(attackHitbox(0.067f, 6, 1.25f));
                     } else if (Input.GetAxis("Vertical"+playerIndex)<-0.5f) {
                         Debug.Log("Down Air");
+                        GetComponent<AudioSource>().PlayOneShot(ddown);
                         endLag = 0.583f;
                         playerAnimator.SetTrigger("downAir");
                         GameObject newMelon = Instantiate(downAirProjectile, hitboxes[7].position, Quaternion.identity);
@@ -143,18 +159,21 @@ public class Player : MonoBehaviour
                         // Add hitboxes onto this
                     } else if (Input.GetAxis("Horizontal"+playerIndex) * direction > 0.2f) {
                         Debug.Log("Forward Air");
+                        GetComponent<AudioSource>().PlayOneShot(fforward);
                         playerAnimator.SetTrigger("sideAttack");
                         endLag = 0.25f;
                         StartCoroutine(attackHitbox(0.083f, 5, 1.25f));
                     } else if (Input.GetAxis("Horizontal"+playerIndex) * direction < -0.2f) {
                         direction *= -1;
                         Debug.Log("Back Air");
+                        GetComponent<AudioSource>().PlayOneShot(fforward);
                         playerAnimator.SetTrigger("sideAttack");
                         gameObject.transform.localScale = new Vector3(direction,1,1);
                         endLag = 0.25f;
                         StartCoroutine(attackHitbox(0.083f, 5, 1.25f));
                     } else {
                         Debug.Log("Neutral Air");
+                        GetComponent<AudioSource>().PlayOneShot(jjab);
                         playerAnimator.SetTrigger("neutralAttack");
                         endLag = 0.25f;
                         StartCoroutine(attackHitbox(0.033f, 4, 1.25f));
@@ -162,6 +181,7 @@ public class Player : MonoBehaviour
                 }
             } else if (Input.GetButtonDown("Special"+playerIndex)) {
                 Debug.Log("Neutral Special");
+                GetComponent<AudioSource>().PlayOneShot(sspecial);
                 endLag = 0.3f;
                 playerAnimator.SetTrigger("special");
                 GameObject newStar = Instantiate(specialProjectile, hitboxes[8].position, Quaternion.identity);
@@ -264,7 +284,7 @@ public class Player : MonoBehaviour
         }
 
         playerAnimator.SetFloat("Speed", rb.velocity.x * direction);
-        playerAnimator.SetBool("isGrounded", grounded);
+        playerAnimator.SetBool("isGrounded", grounded || iced);
         playerAnimator.SetBool("doubleJump", didDoubleJump);
         playerAnimator.SetFloat("hitStun", hitStun);
     }
