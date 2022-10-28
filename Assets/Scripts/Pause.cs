@@ -7,14 +7,20 @@ public class Pause : MonoBehaviour
 {
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
+    public GameObject PercentPanel;
+    public GameObject HeartPanel;
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape)){
             if(GameIsPaused){
                 Resume();
+                PercentPanel.SetActive(true);
+                HeartPanel.SetActive(true);
             }
             else{
                 PauseGame();
+                PercentPanel.SetActive(false);
+                HeartPanel.SetActive(false);
             }
         }
     }
