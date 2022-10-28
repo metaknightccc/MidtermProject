@@ -22,7 +22,10 @@ public class HealthSystem : MonoBehaviour
 
     void Update()
     {
-        rateText.text = rate.ToString()+"%";
+        if (SceneManager.GetActiveScene().name != "Victory")
+        {
+            rateText.text = rate.ToString()+"%";
+        }
         if (isDead == true)
         {
             Debug.Log("Dead");
