@@ -165,6 +165,10 @@ public class Player : MonoBehaviour
                 endLag = 0.3f;
                 playerAnimator.SetTrigger("special");
                 GameObject newStar = Instantiate(specialProjectile, hitboxes[8].position, Quaternion.identity);
+                if (SceneManager.GetActiveScene().name == "Stage3")
+                {
+                    newStar.GetComponent<Renderer>().sortingLayerName = "1(ground)";
+                }
                 newStar.GetComponent<Rigidbody2D>().AddForce(transform.right * direction * specialForce);
             }
         }
