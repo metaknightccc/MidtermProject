@@ -90,6 +90,9 @@ TagManager:
   - name: 1(ground)
     uniqueID: 220721595
     locked: 0
+  - name: mist_front
+    uniqueID: 3443985175
+    locked: 0
   - name: 0
     uniqueID: 314521491
     locked: 0
