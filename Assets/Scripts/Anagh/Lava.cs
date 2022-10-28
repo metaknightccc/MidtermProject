@@ -23,8 +23,8 @@ public class Lava : MonoBehaviour
     }
 
     IEnumerator inflictLavaDamage() {
-        yield return new WaitForSeconds(2);
-        health.Damage(5);
+        yield return new WaitForSeconds(1);
+        health.Damage(7);
         watch = null;
     }
 

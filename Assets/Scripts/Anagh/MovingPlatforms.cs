@@ -34,6 +34,23 @@ public class MovingPlatforms : MonoBehaviour
     
     }
 
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (!other.CompareTag("Player")) {
+            print("running");
+            return;
+        }
+           
+        else
+            print("test");
+            other.transform.parent = transform;
+    }
+
+    private void OnTriggerExit2D(Collider2D other) {
+        if (!other.CompareTag("Player")) 
+            return;
+        other.transform.parent = null;
+    }
+
 
     private void OnDrawGizmos() {
         Gizmos.DrawLine(pos1.position, pos2.position);
